@@ -16,7 +16,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+//import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
@@ -38,7 +39,7 @@ public class Progeny extends Game implements ApplicationListener {
 	public static String VERSION = "0.01 Pre-Alpha";
 	public static String LOG = "";
 	
-	public static PerspectiveCamera cam;
+	public static OrthographicCamera cam;
 	public ModelBatch modelBatch;
 	
 	public static SplashScreen splash;

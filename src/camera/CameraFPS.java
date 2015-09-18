@@ -3,7 +3,8 @@ package camera;
 import progeny.Progeny;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+//import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -25,7 +26,7 @@ public class CameraFPS {
 	public CameraFPS(float x, float y, float z){
 		position = new Vector3(x,y,z);
 		this.location = new Location(x,y,z);
-		Progeny.cam = new PerspectiveCamera(68, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Progeny.cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Progeny.cam.near = near;
 		Progeny.cam.far = far;
 		viewport = new FitViewport(1280, 720, Progeny.cam);
