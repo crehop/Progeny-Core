@@ -16,6 +16,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 //import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -39,7 +40,7 @@ public class Progeny extends Game implements ApplicationListener {
 	
 	private static SpriteBatch sb;
 	private static OrthographicCamera cam;
-
+    private static GameObject test;
 	public static SplashScreen splash;
 	public static Player player;
 	public static UI ui;
@@ -85,7 +86,13 @@ public class Progeny extends Game implements ApplicationListener {
 		assets.getAssetManager().finishLoading();
 		
 		
-		//ABSOLUTE 0,0 BOX=========================================
+		//TEST CODE REMOVE FROM FINAL GAME
+		test = new GameObject(new Sprite(), Gdx.graphics.getWidth()/2 -100, Gdx.graphics.getHeight()/2 - 100, 0);
+		test.setRegion(new Texture("data/badlogic.jpg"));
+		test.setSize(100, 100);
+		this.gameObjects.add(test);
+		//==================================================================
+		
 		//===========================================================
 		Gdx.graphics.setContinuousRendering(true);
 		Gdx.graphics.setVSync(true);
