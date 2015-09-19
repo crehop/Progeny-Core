@@ -14,18 +14,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 //import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -36,12 +30,16 @@ import entities.AssetHandler;
 import entities.GameObject;
 
 public class Progeny extends Game implements ApplicationListener {
-	public static String VERSION = "0.01 Pre-Alpha";
+	public static final String TITLE = "Progeny";
+	public static final int V_HEIGHT = 600;
+	public static final int V_WIDTH = 800;
+	public static final float SCALE = 2.0f;
+	public static final String VERSION = "0.01 Pre-Alpha";
 	public static String LOG = "";
 	
-	public static OrthographicCamera cam;
-	public ModelBatch modelBatch;
-	
+	private static SpriteBatch sb;
+	private static OrthographicCamera cam;
+
 	public static SplashScreen splash;
 	public static Player player;
 	public static UI ui;
@@ -55,7 +53,7 @@ public class Progeny extends Game implements ApplicationListener {
 	public static Controls controls;
 	public static MenuControls controlsMenu;
 	
-	private static ArrayList<ModelInstance> models = new ArrayList<ModelInstance>();
+	private static ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
 	float progress;
 	
@@ -81,26 +79,17 @@ public class Progeny extends Game implements ApplicationListener {
 		Progeny.game = this;
 		controls = new Controls(this);
 		controlsMenu = new MenuControls(this);
-        env = new Environment();
-        env.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, .011f));
-        env.add(new DirectionalLight().set(1f, 1f, 1f, -18f, -11.8f, -22.2f));
+		sb = new SpriteBatch();
 		player = new Player(0,0,10,this);
 		splash = new SplashScreen(this);
 		assets.getAssetManager().finishLoading();
-		modelBatch = new ModelBatch();
-		modelBuilder = new ModelBuilder();
 		
-		//ABSOLUTE 0,0,0 BOX=========================================
-		Model model = modelBuilder.createBox(.02f, .02f, .02f, 
-           new Material(ColorAttribute.createDiffuse(Color.RED)),
-           Usage.Position | Usage.Normal);
-		newModelInstance(new ModelInstance(model));
+		
+		//ABSOLUTE 0,0 BOX=========================================
 		//===========================================================
-		
 		Gdx.graphics.setContinuousRendering(true);
 		Gdx.graphics.setVSync(true);
 		Gdx.input.setCursorCatched(false );
-		
 		setScreen(splash);
 		multiplexer = new InputMultiplexer(ui.getStage(),controlsMenu);
 		Gdx.input.setInputProcessor(multiplexer);
@@ -125,25 +114,25 @@ public class Progeny extends Game implements ApplicationListener {
 	  	    
 	  	    //Ooze===================================
 	  	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-			modelBatch.begin(cam);
-	        modelBatch.end();
+			sb.begin();
+	        sb.end();
 			Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
 	  	    //=========================================
 			
 			//Animals=====================================
-			modelBatch.begin(cam);
-			for(ModelInstance instance:models){
-				modelBatch.render(instance,env);
+			sb.begin();
+			for(GameObject object:gameObjects){
+				sb.draw(object.getTexture(), object.getLocation().getX(), object.getLocation().getY());
 			}
-	        modelBatch.end();
+	        sb.end();
 			//=========================================
 			Console.render();
 			//Effects and movement==================================
-			modelBatch.begin(cam);
+			sb.begin();
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(GL20.GL_ONE_MINUS_SRC_ALPHA, GL20.GL_ALPHA);
-	        modelBatch.end();
+	        sb.end();
 			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 	  	    //=========================================
@@ -157,7 +146,7 @@ public class Progeny extends Game implements ApplicationListener {
 	@Override
 	public void dispose() {
 		super.dispose();
-		modelBatch.dispose();
+		sb.dispose();
 		assets.assets.dispose();
         ui.dispose();
 	}
@@ -185,13 +174,22 @@ public class Progeny extends Game implements ApplicationListener {
 		return assets.getAssetManager();
 	}
 	
-	public static void newModelInstance(ModelInstance modelInstance) {
-		models.add(modelInstance);
+	public static void newSprite(Sprite sprite, float x, float y, float z) {
+		GameObject nGO = new GameObject(sprite, x,y,z);
+		gameObjects.add(nGO); 
 	}
 	
 	protected boolean isVisible(final GameObject instance) {
-	    instance.transform.getTranslation(position);
 	    position.add(instance.center);
 	    return cam.frustum.sphereInFrustum(position, instance.radius);
 	}
+	
+	public static OrthographicCamera getCam() {
+		return cam;
+	}
+
+	public static void setCam(OrthographicCamera cam) {
+		Progeny.cam = cam;
+	}
+
 }

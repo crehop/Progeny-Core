@@ -26,10 +26,10 @@ public class CameraFPS {
 	public CameraFPS(float x, float y, float z){
 		position = new Vector3(x,y,z);
 		this.location = new Location(x,y,z);
-		Progeny.cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		Progeny.cam.near = near;
-		Progeny.cam.far = far;
-		viewport = new FitViewport(1280, 720, Progeny.cam);
+		Progeny.setCam(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		Progeny.getCam().near = near;
+		Progeny.getCam().far = far;
+		viewport = new FitViewport(Progeny.V_HEIGHT, Progeny.V_WIDTH, Progeny.getCam());
 	}
 	
 	public void yaw(float amount){

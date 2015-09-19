@@ -30,11 +30,11 @@ public class Player extends CameraFPS implements Screen{
 	}
 	@Override
 	public void render(float delta) {
-		Progeny.cam.up.set(0, 1, 0);
-		Progeny.cam.position.set(this.location.getPosition());
-		Progeny.cam.direction.set(0,0,-1);
-		Progeny.cam.rotate(getYaw(), 0,1,0);
-		Progeny.cam.rotate(Progeny.cam.direction.cpy().crs(Vector3.Y), -1 * -getPitch());
+		Progeny.getCam().up.set(0, 1, 0);
+		Progeny.getCam().position.set(this.location.getPosition());
+		Progeny.getCam().direction.set(0,0,-1);
+		Progeny.getCam().rotate(getYaw(), 0,1,0);
+		Progeny.getCam().rotate(Progeny.getCam().direction.cpy().crs(Vector3.Y), -1 * -getPitch());
 		this.updateLocation();
 	}
 	@Override

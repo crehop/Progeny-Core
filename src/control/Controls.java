@@ -227,24 +227,6 @@ public class Controls extends InputAdapter implements InputProcessor {
 			case Input.Keys.ENTER:
 				return false;
 			case Input.Keys.E:
-				if(Gdx.input.isCursorCatched()){
-					this.mousePosition.x = Gdx.input.getX();
-					this.mousePosition.y = Gdx.input.getY();
-					this.direction = Progeny.cam.direction;
-					Gdx.input.setCursorCatched(false);
-					Progeny.cam.lookAt(this.direction);
-					Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-				}else{
-					if(selected > 0){
-				        mat = Progeny.instances.get(selected).materials.get(0);
-				        mat.clear();
-				        mat.set(originalMaterial);
-					}
-					this.direction = Progeny.cam.direction;
-					Gdx.input.setCursorCatched(true);
-					Gdx.input.setCursorPosition((int)this.mousePosition.x, (int)this.mousePosition.y);
-					Progeny.cam.lookAt(this.direction);
-				}
 				return false;
 			case Input.Keys.W:
 				forward = false;
@@ -344,90 +326,15 @@ public class Controls extends InputAdapter implements InputProcessor {
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		selecting = getObject(screenX, screenY);
-	    if (button == Input.Buttons.LEFT && selecting >= 0) {
-	        if (selecting == getObject(screenX, screenY)){
-	            setSelected(selecting);
-	        }
-	        selecting = -1;
-	        return true;
-	    }
-	    else if(button == Input.Buttons.RIGHT){
-			if(Gdx.input.isCursorCatched()){
-				this.mousePosition.x = Gdx.input.getX();
-				this.mousePosition.y = Gdx.input.getY();
-				this.direction = Progeny.cam.direction;
-				Gdx.input.setCursorCatched(false);
-				Progeny.cam.lookAt(this.direction);
-				Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-				return true;
-			}else{
-				if(selected > 0){
-			        mat = Progeny.instances.get(selected).materials.get(0);
-			        mat.clear();
-			        mat.set(originalMaterial);
-				}
-				this.direction = Progeny.cam.direction;
-				Gdx.input.setCursorCatched(true);
-				Gdx.input.setCursorPosition((int)this.mousePosition.x, (int)this.mousePosition.y);
-				Progeny.cam.lookAt(this.direction);
-				return true;
-			}
-		}
-	    return false;   
+		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-	    if (selecting < 0) 
-	        return false;
-	    if (selected == selecting) {
-	        Ray ray = Progeny.cam.getPickRay(screenX, screenY);
-	        final float distance = -ray.origin.y / ray.direction.y;
-	        position.set(ray.direction).scl(distance).add(ray.origin);
-	        Progeny.instances.get(selected).transform.setTranslation(position);
-	    }
-	    return true;
+		return false;
+	    
 	}
 	public int getObject (int screenX, int screenY) {
-	    Ray ray = Progeny.cam.getPickRay(screenX, screenY);
-	    
-	    result = -1;
-	    distance = -1;
-	 
-	    for (int i = 0; i < Progeny.instances.size; ++i) {
-	        final GameObject instance = Progeny.instances.get(i);
-	 
-	        instance.transform.getTranslation(position);
-	        position.add(instance.center);
-	 
-	        dist2 = ray.origin.dst2(position);
-	        if (distance >= 0f && dist2 > distance)
-	            continue;
-	 
-	        if (Intersector.intersectRaySphere(ray, position, instance.radius, null)) {
-	            result = i;
-	            distance = dist2;
-	        }
-	    }
-	 
-	    return result;
-	}
-
-	public void setSelected (int value) {
-	    if (selected == value) return;
-	    if (selected >= 0) {
-	        mat = Progeny.instances.get(selected).materials.get(0);
-	        mat.clear();
-	        mat.set(originalMaterial);
-	    }
-	    selected = value;
-	    if (selected >= 0) {
-	        mat = Progeny.instances.get(selected).materials.get(0);
-	        originalMaterial.clear();
-	        originalMaterial.set(mat);
-	        mat.clear();
-	        mat.set(selectionMaterial);
-	    }
+	   return 0;
 	}
 }

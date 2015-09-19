@@ -3,12 +3,11 @@ package entities;
 import screens.Console;
 import server.Location;
 
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 
-public class GameObject extends ModelInstance{
+public class GameObject extends Sprite{
 	Location location;
 	float roll = 0f;
 	float pitch = 0f;
@@ -23,31 +22,16 @@ public class GameObject extends ModelInstance{
     public final float radius;
     private final static BoundingBox bounds = new BoundingBox();
 
-	public GameObject(Model model, float x, float y, float z) {
-		super(model,x,y,z);
+	public GameObject(Sprite sprite, float x, float y, float z) {
+		super();
+		radius = 0;
 		this.location = new Location(x,y,z);
-        calculateBoundingBox(bounds);
-        bounds.getCenter(center);
-        bounds.getDimensions(dimensions);
-        radius = dimensions.len() / 2f;
         progeny.Progeny.instances.add(this);
         Console.setLine4("Instance count:" + progeny.Progeny.instances.size);
 	}
 	
 	public Location getLocation() {
 		return this.location;
-	}
-	public float getRoll() {
-		return roll;
-	}
-	public void setRoll(float roll) {
-		this.roll = roll;
-	}
-	public float getPitch() {
-		return pitch;
-	}
-	public void setPitch(float pitch) {
-		this.pitch = pitch;
 	}
 	public float getYaw() {
 		return yaw;
@@ -67,12 +51,6 @@ public class GameObject extends ModelInstance{
 	public void setScaleY(float scaleY) {
 		this.scaleY = scaleY;
 	}
-	public float getScaleZ() {
-		return scaleZ;
-	}
-	public void setScaleZ(float scaleZ) {
-		this.scaleZ = scaleZ;
-	}
 	public boolean isStaticObject() {
 		return staticObject;
 	}
@@ -82,10 +60,9 @@ public class GameObject extends ModelInstance{
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	public void setLocation(float x, float y, float z){
+	public void setLocation(float x, float y){
 		this.location.setX(x);
 		this.location.setY(y);
-		this.location.setZ(z);
 	}
 	public void setStatic(boolean isStatic){
 		this.staticObject = isStatic;
@@ -106,10 +83,9 @@ public class GameObject extends ModelInstance{
 		this.meta = meta;
 	}
 	public void render() {
-		this.transform.setToScaling(scaleX, scaleY, scaleZ);
-		this.transform.setToRotation(progeny.Progeny.yAxis, yaw);
-		this.transform.setToRotation(progeny.Progeny.xAxis, pitch);
-		this.transform.setToRotation(progeny.Progeny.zAxis, roll);
-		this.transform.setToTranslation(this.getLocation().getPosition());
+		this.setScale(scaleX, scaleY);
+		this.setCenterX(location.getX());
+		this.setCenterY(location.getY());
+		this.setTexture(getTexture());
 	}
 }
