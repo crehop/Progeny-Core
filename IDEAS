@@ -1,0 +1,13 @@
+	
+FOOD SYSTEM	
+Food.class falls through the water with a nutrition variable, as it goes down nutrition decreases, as does the speed at which it falls.
+Creatures attack eachother based on how much food they need and the amount of food nearby, this nearby food also makes them teritorial, food gives energy to
+reproduce and move.
+
+NUTRITION SYSTEM
+Use X energy per tick, must replenish, must use alot to reproduce, offspring remembers reproduction energy levels and reproduces at those levels. 
+Offspring have same remaining energy as parent, so if parent has child with low energy child will have low energy etc.
+
+WATER COLUMN
+Side scrolling with up and down representing the water column.
+
