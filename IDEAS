@@ -11,3 +11,5 @@ Offspring have same remaining energy as parent, so if parent has child with low 
 WATER COLUMN
 Side scrolling with up and down representing the water column.
 
+SET SERVER.CLASS TO NEW SERVER BEFORE PRESSING PLAY;
+

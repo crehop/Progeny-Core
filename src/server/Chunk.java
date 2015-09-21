@@ -4,13 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Chunk {
 	int type;
+	int ID = 0;
 	Sprite chunk;
 	Location location;
 	
 	public Chunk(int x, int y, int z, int type){
-		this.location.setX(x);
-		this.location.setY(y);
-		this.location.setZ(z);
+		this.location = new Location(x,y,z);
 		switch (type) {
 		case ChunkType.AIR:
 			
@@ -48,5 +47,28 @@ public class Chunk {
 		default:
 			break;
 		}
+	}
+	
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+	public int getID(){
+		return ID;
 	}
 }

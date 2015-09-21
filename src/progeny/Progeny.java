@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import screens.Console;
 import screens.Player;
 import screens.SplashScreen;
+import server.Chunk;
+import server.ServerComms;
 import server.Time;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -64,6 +66,10 @@ public class Progeny extends Game implements ApplicationListener {
 	
 	private Vector3 position = new Vector3();
 	
+	// TEST VARIABLES, REMOVE ME1! =======================================================
+	Texture texture;
+	//====================================================================================
+	
 	
 	//WORLD CLASSES
 	
@@ -84,6 +90,7 @@ public class Progeny extends Game implements ApplicationListener {
 		player = new Player(0,0,10,this);
 		splash = new SplashScreen(this);
 		assets.getAssetManager().finishLoading();
+		texture = new Texture("terrain/tiles.png");
 		
 		
 		//TEST CODE REMOVE FROM FINAL GAME
@@ -122,6 +129,9 @@ public class Progeny extends Game implements ApplicationListener {
 	  	    //Ooze===================================
 	  	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			sb.begin();
+			for(Chunk chunk:ServerComms.getWorld()){
+				sb.draw(texture, chunk.getLocation().getX(), chunk.getLocation().getY(), texture.getWidth(), texture.getWidth());
+			}
 	        sb.end();
 			Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
 	  	    //=========================================
