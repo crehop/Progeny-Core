@@ -129,8 +129,8 @@ public class Progeny extends Game implements ApplicationListener {
 	  	    //Ooze===================================
 	  	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			sb.begin();
-			for(Chunk chunk:ServerComms.getWorld()){
-				sb.draw(texture, chunk.getLocation().getX(), chunk.getLocation().getY(), texture.getWidth(), texture.getWidth());
+			for(Chunk object:ServerComms.getWorld()){
+				sb.draw(object.getTexture(), object.getLocation().getX(), object.getLocation().getY());
 			}
 	        sb.end();
 			Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);

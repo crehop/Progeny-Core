@@ -3,6 +3,7 @@ package entities;
 import screens.Console;
 import server.Location;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
@@ -21,6 +22,7 @@ public class GameObject extends Sprite{
     public final Vector3 dimensions = new Vector3();
     public final float radius;
     private final static BoundingBox bounds = new BoundingBox();
+    private int ID = 0;
 
 	public GameObject(Sprite sprite, float x, float y, float z) {
 		super();
@@ -29,7 +31,7 @@ public class GameObject extends Sprite{
         progeny.Progeny.instances.add(this);
         Console.setLine4("Instance count:" + progeny.Progeny.instances.size);
 	}
-	
+
 	public Location getLocation() {
 		return this.location;
 	}
@@ -87,5 +89,11 @@ public class GameObject extends Sprite{
 		this.setCenterX(location.getX());
 		this.setCenterY(location.getY());
 		this.setTexture(getTexture());
+	}
+	public int ID(){
+		return ID;
+	}
+	public void setID(int ID){
+		this.ID = ID;
 	}
 }
