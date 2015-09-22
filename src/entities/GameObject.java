@@ -25,7 +25,7 @@ public class GameObject extends Sprite{
     private int ID = 0;
 
 	public GameObject(Sprite sprite, float x, float y, float z) {
-		super();
+		super(sprite);
 		radius = 0;
 		this.location = new Location(x,y,z);
         progeny.Progeny.instances.add(this);

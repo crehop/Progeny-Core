@@ -1,5 +1,7 @@
 package server;
 
+import progeny.Progeny;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -10,10 +12,14 @@ public class Chunk {
 	int type;
 	int ID = 0;
 	Location location;
+	Texture texture;
 	
 	public Chunk(int x, int y, int z, int type){
+		System.out.println("Chunk created");
 		this.location = new Location(x,y,z);
-		this.chunk = new GameObject(new Sprite(new Texture("terrain/tiles.png")),location.getX(), location.getY(), z);
+		this.texture = new Texture("terrain/tiles.png");
+		this.chunk = new GameObject(new Sprite(texture),location.getX(), location.getY(), z);
+		Progeny.gameObjects.add(chunk);
 		switch (type) {
 		case ChunkType.AIR:
 			

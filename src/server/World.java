@@ -18,6 +18,7 @@ public class World {
 			 for(int currentX = 0; currentX < chunksX; currentX++){
 				 Chunk chunk = new Chunk(xScroll, yScroll, 0, ChunkType.SHALLOW_WATER);
 				 chunk.setID(totalChunks);
+				 worldChunk.add(chunk);
 				 xScroll += Guide.getWidth();
 				 totalChunks ++;
 				 System.out.println("ADDING CHUNK " + totalChunks);

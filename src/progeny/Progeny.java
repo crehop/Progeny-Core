@@ -26,6 +26,7 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.sun.corba.se.spi.activation.Server;
 
 import control.Controls;
 import control.MenuControls;
@@ -46,6 +47,7 @@ public class Progeny extends Game implements ApplicationListener {
 	public static SplashScreen splash;
 	public static Player player;
 	public static UI ui;
+	public static server.Server server;
 	
 	public static Environment env;
 	private static Progeny game;
@@ -56,7 +58,7 @@ public class Progeny extends Game implements ApplicationListener {
 	public static Controls controls;
 	public static MenuControls controlsMenu;
 	
-	private static ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+	public static ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
 	float progress;
 	
@@ -91,7 +93,7 @@ public class Progeny extends Game implements ApplicationListener {
 		splash = new SplashScreen(this);
 		assets.getAssetManager().finishLoading();
 		texture = new Texture("terrain/tiles.png");
-		
+		server = new server.Server();
 		
 		//TEST CODE REMOVE FROM FINAL GAME
 		test = new GameObject(new Sprite(), Gdx.graphics.getWidth()/2 -100, Gdx.graphics.getHeight()/2 - 100, 0);
@@ -128,19 +130,20 @@ public class Progeny extends Game implements ApplicationListener {
 	  	    
 	  	    //Ooze===================================
 	  	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-			sb.begin();
-			for(Chunk object:ServerComms.getWorld()){
-				sb.draw(object.getTexture(), object.getLocation().getX(), object.getLocation().getY());
-			}
-	        sb.end();
 			Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
 	  	    //=========================================
 			
 			//Animals=====================================
 			sb.begin();
 			for(GameObject object:gameObjects){
-				sb.draw(object.getTexture(), object.getLocation().getX(), object.getLocation().getY());
+				sb
+				.draw(object.getTexture(), 
+						object.getLocation().getX(), 
+						object.getLocation().getY(),
+						object.getTexture().getWidth(),
+						object.getHeight());
 			}
+			Console.setLine6("GAMEOBJECTS = " + gameObjects.size());
 	        sb.end();
 			//=========================================
 			Console.render();
