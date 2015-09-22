@@ -96,7 +96,7 @@ public class Progeny extends Game implements ApplicationListener {
 		server = new server.Server();
 		
 		//TEST CODE REMOVE FROM FINAL GAME
-		test = new GameObject(new Sprite(), Gdx.graphics.getWidth()/2 -100, Gdx.graphics.getHeight()/2 - 100, 0);
+		test = new GameObject(new Sprite(), Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
 		test.setRegion(new Texture("data/badlogic.jpg"));
 		test.setSize(100, 100);
 		this.gameObjects.add(test);
@@ -136,12 +136,11 @@ public class Progeny extends Game implements ApplicationListener {
 			//Animals=====================================
 			sb.begin();
 			for(GameObject object:gameObjects){
-				sb
-				.draw(object.getTexture(), 
-						object.getLocation().getX(), 
-						object.getLocation().getY(),
-						object.getTexture().getWidth(),
-						object.getHeight());
+				if(object.hasTextureRegion()){
+					sb.draw(object.getTextureRegion(), object.getLocation().getX(), object.getLocation().getY(),object.getWidth(),object.getHeight());
+				}else{
+					sb.draw(object.getTexture(), object.getLocation().getX(), object.getLocation().getY(), object.getHeight(),object.getWidth());
+				}
 			}
 			Console.setLine6("GAMEOBJECTS = " + gameObjects.size());
 	        sb.end();
@@ -162,7 +161,7 @@ public class Progeny extends Game implements ApplicationListener {
 	       progress = assets.getAssetManager().getProgress();
 	  	 }
 	}
-	
+
 	@Override
 	public void dispose() {
 		super.dispose();

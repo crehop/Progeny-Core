@@ -5,6 +5,7 @@ import server.Location;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 
@@ -23,6 +24,7 @@ public class GameObject extends Sprite{
     public final float radius;
     private final static BoundingBox bounds = new BoundingBox();
     private int ID = 0;
+	private TextureRegion textureRegion;
 
 	public GameObject(Sprite sprite, float x, float y, float z) {
 		super(sprite);
@@ -31,6 +33,14 @@ public class GameObject extends Sprite{
         progeny.Progeny.instances.add(this);
         Console.setLine4("Instance count:" + progeny.Progeny.instances.size);
 	}
+
+	public GameObject(Sprite sprite, Location location2) {
+		super(sprite);
+		radius = 0;
+		this.location = new Location(location2);
+        progeny.Progeny.instances.add(this);
+        Console.setLine4("Instance count:" + progeny.Progeny.instances.size);	
+    }
 
 	public Location getLocation() {
 		return this.location;
@@ -95,5 +105,20 @@ public class GameObject extends Sprite{
 	}
 	public void setID(int ID){
 		this.ID = ID;
+	}
+
+	public void setTextureRegion(TextureRegion textureRegion) {
+		this.textureRegion = textureRegion;
+		super.setSize(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
+	}
+	public TextureRegion getTextureRegion(){
+		return this.textureRegion;
+	}
+
+	public boolean hasTextureRegion() {
+		if(this.textureRegion == null){
+			return false;
+		}
+		return true;
 	}
 }

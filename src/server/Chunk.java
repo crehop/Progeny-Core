@@ -4,6 +4,7 @@ import progeny.Progeny;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import entities.GameObject;
 
@@ -12,13 +13,14 @@ public class Chunk {
 	int type;
 	int ID = 0;
 	Location location;
-	Texture texture;
+	TextureRegion textureRegion;
 	
 	public Chunk(int x, int y, int z, int type){
-		System.out.println("Chunk created");
 		this.location = new Location(x,y,z);
-		this.texture = new Texture("terrain/tiles.png");
-		this.chunk = new GameObject(new Sprite(texture),location.getX(), location.getY(), z);
+		this.textureRegion = ChunkType.AIR_TEXTURE;
+		this.chunk = new GameObject(new Sprite(textureRegion),location);
+		this.chunk.setTextureRegion(this.textureRegion);
+		
 		Progeny.gameObjects.add(chunk);
 		switch (type) {
 		case ChunkType.AIR:
@@ -82,7 +84,7 @@ public class Chunk {
 		return ID;
 	}
 
-	public Texture getTexture() {
-		return ChunkType.AIR_TEXTURE;
+	public TextureRegion getTextureRegion() {
+		return this.textureRegion;
 	}
 }
