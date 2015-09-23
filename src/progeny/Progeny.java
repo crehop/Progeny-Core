@@ -96,10 +96,6 @@ public class Progeny extends Game implements ApplicationListener {
 		server = new server.Server();
 		
 		//TEST CODE REMOVE FROM FINAL GAME
-		test = new GameObject(new Sprite(), Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
-		test.setRegion(new Texture("data/badlogic.jpg"));
-		test.setSize(100, 100);
-		this.gameObjects.add(test);
 		//==================================================================
 		
 		//===========================================================

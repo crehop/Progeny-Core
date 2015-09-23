@@ -1,5 +1,7 @@
 package server;
 
+import java.util.Random;
+
 import progeny.Progeny;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -14,10 +16,11 @@ public class Chunk {
 	int ID = 0;
 	Location location;
 	TextureRegion textureRegion;
+	Random Rand = new Random();
 	
 	public Chunk(int x, int y, int z, int type){
 		this.location = new Location(x,y,z);
-		this.textureRegion = ChunkType.AIR_TEXTURE;
+		this.textureRegion = ChunkType.random();
 		this.chunk = new GameObject(new Sprite(textureRegion),location);
 		this.chunk.setTextureRegion(this.textureRegion);
 		

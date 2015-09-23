@@ -12,8 +12,8 @@ public class Server {
 		this.initialize();
 	}
 	private void initialize() {
-		configurableWorldSizeX = 3;
-		configurableWorldSizeY= 3;
+		configurableWorldSizeX = 20;
+		configurableWorldSizeY= 20;
 		System.out.println("Initializing Server...." );
 		 world = new World(configurableWorldSizeX,configurableWorldSizeY,new Texture("terrain/tiles.png"));
 	}

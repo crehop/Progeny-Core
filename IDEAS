@@ -13,3 +13,5 @@ Side scrolling with up and down representing the water column.
 
 SET SERVER.CLASS TO NEW SERVER BEFORE PRESSING PLAY;
 
+DEPTH METER USING data/terrain/tiles.png with arrow denoting depth(readout below).
+
