@@ -18,7 +18,10 @@ public class Server {
 		 world = new World(configurableWorldSizeX,configurableWorldSizeY,new Texture("terrain/tiles.png"));
 			System.out.println("World Created Successfully!" );
 	}
-	public ArrayList<Chunk> getWorld(){
+	public ArrayList<Chunk> getWorldChunks(){
 		return this.world.worldChunk;
+	}
+	public World getWorld(){
+		return world;
 	}
 }

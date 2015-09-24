@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class World {
 	ArrayList<Chunk> worldChunk; 
 	public int activeChunks;
+	public int activeObjects;
 	public int totalChunks;
 	Random rand = new Random();
 	

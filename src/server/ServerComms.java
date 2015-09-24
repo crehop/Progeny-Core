@@ -13,11 +13,11 @@ public class ServerComms {
 	}
 	public static ArrayList<Chunk> getWorld(){
 		if(started){
-			return server.getWorld();
+			return server.getWorldChunks();
 		}else{
 			server = new Server();
 			started = true;
-			return server.getWorld();
+			return server.getWorldChunks();
 		}
 	}
 }

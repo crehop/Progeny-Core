@@ -39,6 +39,7 @@ public class Progeny extends Game implements ApplicationListener {
 	public static final int V_WIDTH = 800;
 	public static final float SCALE = 2.0f;
 	public static final String VERSION = "0.01 Pre-Alpha";
+	private static int activeObjects = 0;
 	public static String LOG = "";
 	
 	private static SpriteBatch sb;
@@ -131,14 +132,21 @@ public class Progeny extends Game implements ApplicationListener {
 			
 			//Animals=====================================
 			sb.begin();
+			activeObjects = 0;
 			for(GameObject object:gameObjects){
-				if(object.hasTextureRegion()){
+				if(object.hasTextureRegion()&& object.isVisible((int)player.getLocation().getX(), (int)player.getLocation().getY())){
 					sb.draw(object.getTextureRegion(), object.getLocation().getX() - player.getLocation().getX(), object.getLocation().getY() - player.getLocation().getY(),object.getWidth(),object.getHeight());
+					activeObjects++;
 				}else{
-					sb.draw(object.getTexture(), object.getLocation().getX() - player.getLocation().getX(), object.getLocation().getY() - player.getLocation().getY(), object.getHeight(),object.getWidth());
+					if(object.isVisible((int)player.getLocation().getX(), (int)player.getLocation().getY())){
+						sb.draw(object.getTexture(), object.getLocation().getX() - player.getLocation().getX(), object.getLocation().getY() - player.getLocation().getY(), object.getHeight(),object.getWidth());
+						activeObjects++;
+					}
 				}
 			}
 			Console.setLine6("GAMEOBJECTS = " + gameObjects.size());
+			Console.setLine7("ACTIVE CHUNKS = " + activeObjects);
+			
 	        sb.end();
 			//=========================================
 			Console.render();

@@ -3,6 +3,7 @@ package entities;
 import screens.Console;
 import server.Location;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -120,5 +121,12 @@ public class GameObject extends Sprite{
 			return false;
 		}
 		return true;
+	}
+	public boolean isVisible(int x,int y){
+		if(this.location.getX() < x  + Gdx.graphics.getWidth() && this.location.getX() > x  - this.getWidth() && this.location.getY() < y + Gdx.graphics.getHeight() && this.location.getY() > y - this.getHeight()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
