@@ -39,14 +39,12 @@ public class CameraFPS {
 		setPitch(amount);
 	}
 	public void walkBackward(float distance){
-		this.position.x -= distance * (float)Math.sin(Math.toRadians(-getYaw()));
-		this.position.z += distance * (float)Math.cos(Math.toRadians(-getYaw()));
+		this.position.y -= distance;
 		updateLocation();
 		
 	}
 	public void walkForward(float distance){
-		this.position.x += distance * (float)Math.sin(Math.toRadians(-getYaw()));
-		this.position.z -= distance * (float)Math.cos(Math.toRadians(-getYaw()));
+		this.position.y += distance;
 		updateLocation();
 	}
 	protected float getYaw() {
@@ -55,14 +53,12 @@ public class CameraFPS {
 
 	public void strafeRight(float distance){
 		//moves camera forward relative to its current rotation;
-		this.position.x -= distance * (float)Math.sin(Math.toRadians(-getYaw() - 90));
-		this.position.z += distance * (float)Math.cos(Math.toRadians(-getYaw() - 90));
+		this.position.x += distance;
 		updateLocation();
 	}
 	public void strafeLeft(float distance){
 		//moves camera forward relative to its current rotation;
-		this.position.x -= distance * (float)Math.sin(Math.toRadians(-getYaw() + 90));
-		this.position.z += distance * (float)Math.cos(Math.toRadians(-getYaw() + 90));
+		this.position.x -= distance;
 		updateLocation();
 	}
 	protected float getYawD() {

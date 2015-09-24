@@ -36,6 +36,35 @@ public class ChunkType {
 			default: return ChunkType.LAVA_TEXTURE;
 		}
 	}
+	public static TextureRegion getTexture(int type){
+		switch (type) {
+		case ChunkType.AIR:
+			return ChunkType.AIR_TEXTURE;
+		case ChunkType.TOP_WATER_LAYER:
+			return ChunkType.TOP_WATER_LAYER_TEXTURE;
+		case ChunkType.SHALLOW_WATER:
+			return ChunkType.SHALLOW_WATER_TEXTURE;
+		case ChunkType.WATER:
+			return ChunkType.WATER_TEXTURE;
+		case ChunkType.DEEP_WATER:
+			return ChunkType.DEEP_WATER_TEXTURE;
+		case ChunkType.FLOOR_WATER:
+			return ChunkType.FLOOR_WATER_TEXTURE;
+		case ChunkType.SAND:
+			return ChunkType.SAND_TEXTURE;
+		case ChunkType.DIRT:
+			return ChunkType.DIRT_TEXTURE;
+		case ChunkType.ROCK:
+			return ChunkType.ROCK_TEXTURE;
+		case ChunkType.OBSIDIAN:
+			return ChunkType.OBSIDIAN_TEXTURE;
+		case ChunkType.LAVA:
+			return ChunkType.LAVA_TEXTURE;
+		default:
+			System.out.println("ERROR! LINE 58 CHUNK.JAVA");
+			return ChunkType.AIR_TEXTURE;
+	}		
+	}
 
 	public static final int AIR = 0;
 	public static final int TOP_WATER_LAYER = 1;

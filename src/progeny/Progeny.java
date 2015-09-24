@@ -133,9 +133,9 @@ public class Progeny extends Game implements ApplicationListener {
 			sb.begin();
 			for(GameObject object:gameObjects){
 				if(object.hasTextureRegion()){
-					sb.draw(object.getTextureRegion(), object.getLocation().getX(), object.getLocation().getY(),object.getWidth(),object.getHeight());
+					sb.draw(object.getTextureRegion(), object.getLocation().getX() - player.getLocation().getX(), object.getLocation().getY() - player.getLocation().getY(),object.getWidth(),object.getHeight());
 				}else{
-					sb.draw(object.getTexture(), object.getLocation().getX(), object.getLocation().getY(), object.getHeight(),object.getWidth());
+					sb.draw(object.getTexture(), object.getLocation().getX() - player.getLocation().getX(), object.getLocation().getY() - player.getLocation().getY(), object.getHeight(),object.getWidth());
 				}
 			}
 			Console.setLine6("GAMEOBJECTS = " + gameObjects.size());

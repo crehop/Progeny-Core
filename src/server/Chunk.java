@@ -20,48 +20,11 @@ public class Chunk {
 	
 	public Chunk(int x, int y, int z, int type){
 		this.location = new Location(x,y,z);
-		this.textureRegion = ChunkType.random();
-		this.chunk = new GameObject(new Sprite(textureRegion),location);
-		this.chunk.setTextureRegion(this.textureRegion);
-		
+		System.out.println("CHUNK:" + type);
+		this.setTexutureRegion(ChunkType.getTexture(type));
+		this.chunk = new GameObject(new Sprite(textureRegion),location);		
+		this.chunk.setTextureRegion(ChunkType.getTexture(type));
 		Progeny.gameObjects.add(chunk);
-		switch (type) {
-		case ChunkType.AIR:
-			
-			break;
-		case ChunkType.TOP_WATER_LAYER:
-			
-			break;
-		case ChunkType.SHALLOW_WATER:
-			
-			break;
-		case ChunkType.WATER:
-			
-			break;
-		case ChunkType.DEEP_WATER:
-			
-			break;
-		case ChunkType.FLOOR_WATER:
-			
-			break;
-		case ChunkType.SAND:
-			
-			break;
-		case ChunkType.DIRT:
-			
-			break;
-		case ChunkType.ROCK:
-			
-			break;
-		case ChunkType.OBSIDIAN:
-			
-			break;
-		case ChunkType.LAVA:
-			
-			break;
-		default:
-			break;
-		}
 	}
 	
 	public int getType() {
@@ -89,5 +52,8 @@ public class Chunk {
 
 	public TextureRegion getTextureRegion() {
 		return this.textureRegion;
+	}
+	public void setTexutureRegion(TextureRegion region){
+		this.textureRegion = region;
 	}
 }

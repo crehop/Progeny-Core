@@ -12,10 +12,11 @@ public class Server {
 		this.initialize();
 	}
 	private void initialize() {
-		configurableWorldSizeX = 20;
-		configurableWorldSizeY= 20;
+		configurableWorldSizeX = 100;
+		configurableWorldSizeY= 200;
 		System.out.println("Initializing Server...." );
 		 world = new World(configurableWorldSizeX,configurableWorldSizeY,new Texture("terrain/tiles.png"));
+			System.out.println("World Created Successfully!" );
 	}
 	public ArrayList<Chunk> getWorld(){
 		return this.world.worldChunk;
