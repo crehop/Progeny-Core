@@ -24,7 +24,6 @@ public class World {
 				 worldChunk.add(chunk);
 				 xScroll += types.getWidth();
 				 totalChunks ++;
-				 System.out.println("ADDING CHUNK " + totalChunks);
 			 }
 			 yScroll += types.getWidth();
 			 xScroll = 0;

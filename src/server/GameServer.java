@@ -1,9 +1,11 @@
 package server;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.badlogic.gdx.graphics.Texture;
 
@@ -13,9 +15,16 @@ public class GameServer{
 	private String configurableIP = "127.0.0.1";
 	private int configurablePORT = 12253;
 	private World world;
-	Socket socket;
+	private Socket socket;
+	private Scanner scanner;
+	
 	public GameServer() throws UnknownHostException, IOException{
-		//socket = new Socket(configurableIP , configurablePORT);
+		socket = new Socket(configurableIP , configurablePORT);
+		scanner = new Scanner(socket.getInputStream());
+		PrintStream printStream = new PrintStream(socket.getOutputStream());
+		printStream.println("test");
+		System.out.println("CONFIRM SENT PACKET!");
+		scanner.nextLine();
 		this.initialize();
 	}
 	private void initialize() {

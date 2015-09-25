@@ -20,7 +20,6 @@ public class Chunk {
 	
 	public Chunk(int x, int y, int z, int type){
 		this.location = new Location(x,y,z);
-		System.out.println("CHUNK:" + type);
 		this.setTexutureRegion(ChunkType.getTexture(type));
 		this.chunk = new GameObject(new Sprite(textureRegion),location);		
 		this.chunk.setTextureRegion(ChunkType.getTexture(type));
