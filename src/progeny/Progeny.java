@@ -2,13 +2,13 @@ package progeny;
 
 import interfaces.UI;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import screens.Console;
 import screens.Player;
 import screens.SplashScreen;
-import server.Chunk;
-import server.ServerComms;
 import server.Time;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -26,7 +26,6 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.sun.corba.se.spi.activation.Server;
 
 import control.Controls;
 import control.MenuControls;
@@ -48,7 +47,7 @@ public class Progeny extends Game implements ApplicationListener {
 	public static SplashScreen splash;
 	public static Player player;
 	public static UI ui;
-	public static server.Server server;
+	public static server.GameServer server;
 	
 	public static Environment env;
 	private static Progeny game;
@@ -94,7 +93,16 @@ public class Progeny extends Game implements ApplicationListener {
 		splash = new SplashScreen(this);
 		assets.getAssetManager().finishLoading();
 		texture = new Texture("terrain/tiles.png");
-		server = new server.Server();
+		try {
+			server = new server.GameServer();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Creating Server");
 		
 		//TEST CODE REMOVE FROM FINAL GAME
 		//==================================================================
