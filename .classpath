@@ -21,5 +21,6 @@
 	<classpathentry kind="lib" path="libs/minlog-none-1.2.jar"/>
 	<classpathentry kind="lib" path="libs/objenesis-1.2.jar"/>
 	<classpathentry kind="lib" path="libs/reflectasm-1.07.jar"/>
+	<classpathentry kind="src" path="/ProgenyServer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

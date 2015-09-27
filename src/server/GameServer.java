@@ -7,7 +7,13 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
+import packets.Packet;
+import packets.Packet1Connect;
+
 import com.badlogic.gdx.graphics.Texture;
+import com.esotericsoftware.kryonet.Client;
 
 public class GameServer{
 	private int configurableWorldSizeX;
@@ -15,16 +21,27 @@ public class GameServer{
 	private String configurableIP = "127.0.0.1";
 	private int configurablePORT = 12253;
 	private World world;
-	private Socket socket;
-	private Scanner scanner;
+	private Client client;
+	private Packet1Connect packet1;
+
 	
 	public GameServer() throws UnknownHostException, IOException{
-		socket = new Socket(configurableIP , configurablePORT);
-		scanner = new Scanner(socket.getInputStream());
-		PrintStream printStream = new PrintStream(socket.getOutputStream());
-		printStream.println("test");
-		System.out.println("CONFIRM SENT PACKET!");
-		scanner.nextLine();
+		client = new Client();
+		client.start();
+		try{
+			client.connect(5000, "127.0.0.1", 54555, 54777);
+		}catch(IOException e){
+			JOptionPane.showMessageDialog(null, "SERVER FAILED TO START, CANNOT CONNECT! \n PLEASE CONFIRM IP EXAMPLE:127.0.0.1:55565");
+		}
+		client.getKryo().register(Packet.class);
+		client.getKryo().register(Packet1Connect.class);
+		packet1 = new Packet1Connect();
+		JOptionPane.showInputDialog("PLEASE LOGIN");
+		String name = " DID NOT WORK ";
+		packet1.setName(name);
+		client.sendTCP(packet1);
+
+		
 		this.initialize();
 	}
 	private void initialize() {
