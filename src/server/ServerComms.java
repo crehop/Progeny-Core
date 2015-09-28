@@ -1,16 +1,14 @@
 package server;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import javax.swing.JOptionPane;
 
 import packets.Packet;
 import packets.Packet1Connect;
+import progeny.Progeny;
+import screens.LoginGui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.esotericsoftware.kryonet.Client;
@@ -25,25 +23,32 @@ public class ServerComms{
 	private World world;
 	private Client client;
 	private Packet1Connect packet1;
-
+	private boolean logout = false;
+	
 	
 	public ServerComms() throws UnknownHostException, IOException{
 		client = new Client();
 		client.start();
+		client.getKryo().register(Packet.class);
+		client.getKryo().register(Packet1Connect.class);
 		try{
 			client.connect(5000, "127.0.0.1", 54555, 54777);
 		}catch(IOException e){
 			JOptionPane.showMessageDialog(null, "SERVER FAILED TO START, CANNOT CONNECT! \n PLEASE CONFIRM IP EXAMPLE:127.0.0.1:55565");
+			logout();
 		}
-		client.getKryo().register(Packet.class);
-		client.getKryo().register(Packet1Connect.class);
-		packet1 = new Packet1Connect();
-		String name = JOptionPane.showInputDialog("PLEASE LOGIN");
-		packet1.setName(name);
-		client.sendTCP(packet1);
-		System.out.println("PACKET NAME IS" + packet1.name);
-		this.initializeListener();
-		this.initialize();
+		if(!logout){
+			packet1 = new Packet1Connect();
+			LoginGui login = new LoginGui();
+			if(!login.hasHappened()){
+				logout();
+			}
+			packet1.setUsername(login.getUsername());
+			packet1.setPassword(login.getPassword());
+			client.sendTCP(packet1);
+			this.initializeListener();
+			this.initialize();
+		}
 	}
 	private void initialize() {
 		configurableWorldSizeX = 100;
@@ -60,10 +65,14 @@ public class ServerComms{
 	    		if(object instanceof Packet1Connect){
 	    			packet1 = (Packet1Connect)object;
 	    			System.out.println();
-	    			JOptionPane.showInputDialog("CONNECTION CONFIRMED: " + packet1.getName());
+	    			if(packet1.logout()){
+		    			JOptionPane.showMessageDialog(null,"CONNECTION DENIED: BAD USERNAME/PASSWORD");
+	    				logout();
+	    			}else{
+	    				JOptionPane.showMessageDialog(null,"CONNECTION CONFIRMED: " + packet1.getUsername());
+	    			}
 	    		}
 	    	}
-	    	
 	    }});		
 	}
 	public ArrayList<Chunk> getWorldChunks(){
@@ -71,5 +80,9 @@ public class ServerComms{
 	}
 	public World getWorld(){
 		return world;
+	}
+	public void logout(){
+		Progeny.getGame().dispose();
+		this.logout  = true;
 	}
 }

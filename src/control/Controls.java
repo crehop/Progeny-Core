@@ -337,4 +337,7 @@ public class Controls extends InputAdapter implements InputProcessor {
 	public int getObject (int screenX, int screenY) {
 	   return 0;
 	}
+	public Progeny getGame(){
+		return game;
+	}
 }

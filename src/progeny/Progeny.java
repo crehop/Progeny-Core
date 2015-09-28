@@ -180,6 +180,9 @@ public class Progeny extends Game implements ApplicationListener {
 		sb.dispose();
 		assets.assets.dispose();
         ui.dispose();
+        splash.dispose();
+        texture.dispose();
+        Gdx.app.exit();
 	}
 
 	@Override
