@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import packets.Packet;
@@ -10,6 +11,7 @@ import packets.Packet1Connect;
 import progeny.Progeny;
 import screens.LoginGui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -24,6 +26,7 @@ public class ServerComms{
 	private Client client;
 	private Packet1Connect packet1;
 	private boolean logout = false;
+	private boolean loginConfirm = false;
 	
 	
 	public ServerComms() throws UnknownHostException, IOException{
@@ -47,15 +50,26 @@ public class ServerComms{
 			packet1.setPassword(login.getPassword());
 			client.sendTCP(packet1);
 			this.initializeListener();
-			this.initialize();
+			if(logout){
+				Gdx.app.exit();
+			}else{
+				this.initialize();
+			}
 		}
+
+			
 	}
 	private void initialize() {
-		configurableWorldSizeX = 100;
-		configurableWorldSizeY= 200;
-		System.out.println("Initializing Server...." );
-		 world = new World(configurableWorldSizeX,configurableWorldSizeY,new Texture("terrain/tiles.png"));
-			System.out.println("World Created Successfully!" );
+		if(logout){
+			logout();
+			System.out.println("ATTEMPTED LOGOUT");
+		}else{
+			configurableWorldSizeX = 100;
+			configurableWorldSizeY= 200;
+			System.out.println("Initializing Server...." );
+			world = new World(configurableWorldSizeX,configurableWorldSizeY,new Texture("terrain/tiles.png"));
+		 	System.out.println("World Created Successfully!" );
+		}
 	}
 	private void initializeListener() {
 		System.out.println("Initializing Listener...." );
@@ -67,9 +81,10 @@ public class ServerComms{
 	    			System.out.println();
 	    			if(packet1.logout()){
 		    			JOptionPane.showMessageDialog(null,"CONNECTION DENIED: BAD USERNAME/PASSWORD");
-	    				logout();
+	    				Gdx.app.exit();
 	    			}else{
-	    				JOptionPane.showMessageDialog(null,"CONNECTION CONFIRMED: " + packet1.getUsername());
+	    				JOptionPane.showMessageDialog(null,"CONNECTION CONFIRMED: " + packet1.getUsername() + "\n Welcome to Hopnet!");
+	    				loginConfirm = true;
 	    			}
 	    		}
 	    	}
