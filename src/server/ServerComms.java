@@ -14,8 +14,10 @@ import packets.Packet1Connect;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
 
-public class GameServer{
+public class ServerComms{
 	private int configurableWorldSizeX;
 	private int configurableWorldSizeY;
 	private String configurableIP = "127.0.0.1";
@@ -25,7 +27,7 @@ public class GameServer{
 	private Packet1Connect packet1;
 
 	
-	public GameServer() throws UnknownHostException, IOException{
+	public ServerComms() throws UnknownHostException, IOException{
 		client = new Client();
 		client.start();
 		try{
@@ -36,12 +38,11 @@ public class GameServer{
 		client.getKryo().register(Packet.class);
 		client.getKryo().register(Packet1Connect.class);
 		packet1 = new Packet1Connect();
-		JOptionPane.showInputDialog("PLEASE LOGIN");
-		String name = " DID NOT WORK ";
+		String name = JOptionPane.showInputDialog("PLEASE LOGIN");
 		packet1.setName(name);
 		client.sendTCP(packet1);
-
-		
+		System.out.println("PACKET NAME IS" + packet1.name);
+		this.initializeListener();
 		this.initialize();
 	}
 	private void initialize() {
@@ -50,6 +51,20 @@ public class GameServer{
 		System.out.println("Initializing Server...." );
 		 world = new World(configurableWorldSizeX,configurableWorldSizeY,new Texture("terrain/tiles.png"));
 			System.out.println("World Created Successfully!" );
+	}
+	private void initializeListener() {
+		System.out.println("Initializing Listener...." );
+	    client.addListener(new Listener() {
+	    public void received (Connection connection, Object object) {
+	    	if(object instanceof Packet){
+	    		if(object instanceof Packet1Connect){
+	    			packet1 = (Packet1Connect)object;
+	    			System.out.println();
+	    			JOptionPane.showInputDialog("CONNECTION CONFIRMED: " + packet1.getName());
+	    		}
+	    	}
+	    	
+	    }});		
 	}
 	public ArrayList<Chunk> getWorldChunks(){
 		return this.world.worldChunk;

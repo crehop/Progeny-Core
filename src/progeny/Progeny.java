@@ -47,7 +47,7 @@ public class Progeny extends Game implements ApplicationListener {
 	public static SplashScreen splash;
 	public static Player player;
 	public static UI ui;
-	public static server.GameServer server;
+	public static server.ServerComms server;
 	
 	public static Environment env;
 	private static Progeny game;
@@ -94,7 +94,7 @@ public class Progeny extends Game implements ApplicationListener {
 		assets.getAssetManager().finishLoading();
 		texture = new Texture("terrain/tiles.png");
 		try {
-			server = new server.GameServer();
+			server = new server.ServerComms();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
