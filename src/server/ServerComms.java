@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import packets.Packet;
 import packets.Packet1Connect;
+import packets.Packet7WorldCreation;
 import progeny.Progeny;
 import screens.LoginGui;
 
@@ -18,15 +19,15 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
 public class ServerComms{
-	private int configurableWorldSizeX;
-	private int configurableWorldSizeY;
 	private String configurableIP = "127.0.0.1";
 	private int configurablePORT = 12253;
-	private World world;
+	private GameWorld world = null;
 	private Client client;
 	private Packet1Connect packet1;
+	private Packet7WorldCreation packet7;
 	private boolean logout = false;
 	private boolean loginConfirm = false;
+	private Integer[][] worldChunks;
 	
 	
 	public ServerComms() throws UnknownHostException, IOException{
@@ -34,6 +35,9 @@ public class ServerComms{
 		client.start();
 		client.getKryo().register(Packet.class);
 		client.getKryo().register(Packet1Connect.class);
+		client.getKryo().register(Packet7WorldCreation.class);
+		client.getKryo().register(Integer[][].class);
+		client.getKryo().register(Integer[].class);
 		try{
 			client.connect(5000, "127.0.0.1", 54555, 54777);
 		}catch(IOException e){
@@ -53,6 +57,9 @@ public class ServerComms{
 			if(logout){
 				Gdx.app.exit();
 			}else{
+				packet7 = new Packet7WorldCreation();
+				System.out.println("Asking for World.....");
+				client.sendUDP(packet7);
 				this.initialize();
 			}
 		}
@@ -64,11 +71,7 @@ public class ServerComms{
 			logout();
 			System.out.println("ATTEMPTED LOGOUT");
 		}else{
-			configurableWorldSizeX = 100;
-			configurableWorldSizeY= 200;
 			System.out.println("Initializing Server...." );
-			world = new World(configurableWorldSizeX,configurableWorldSizeY,new Texture("terrain/tiles.png"));
-		 	System.out.println("World Created Successfully!" );
 		}
 	}
 	private void initializeListener() {
@@ -78,7 +81,6 @@ public class ServerComms{
 	    	if(object instanceof Packet){
 	    		if(object instanceof Packet1Connect){
 	    			packet1 = (Packet1Connect)object;
-	    			System.out.println();
 	    			if(packet1.logout()){
 		    			JOptionPane.showMessageDialog(null,"CONNECTION DENIED: BAD USERNAME/PASSWORD");
 	    				Gdx.app.exit();
@@ -86,14 +88,29 @@ public class ServerComms{
 	    				JOptionPane.showMessageDialog(null,"CONNECTION CONFIRMED: " + packet1.getUsername() + "\n Welcome to Hopnet!");
 	    				loginConfirm = true;
 	    			}
+	    		}else if(object instanceof Packet7WorldCreation){
+	    			packet7 = (Packet7WorldCreation)object;
+	    			if(packet7.worldRecieved()){
+						System.out.println("World Recieved, Creating.....");
+	    				worldChunks = packet7.getWorld();
+	    			}else{
+	    				JOptionPane.showMessageDialog(null,"WORLD LOAD FAILED!");
+	    				logout();
+	    			}
 	    		}
 	    	}
 	    }});		
 	}
 	public ArrayList<Chunk> getWorldChunks(){
+		if(world == null){
+			world = new GameWorld(worldChunks);
+		}
 		return this.world.worldChunk;
 	}
-	public World getWorld(){
+	public GameWorld getWorld(){
+		if(world == null){
+			world = new GameWorld(worldChunks);
+		}
 		return world;
 	}
 	public void logout(){

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 public class AssetHandler {
 	public AssetManager assets;
 	public HashMap<String,Model> loadedModels = new HashMap<String,Model>();
+
 	public ArrayList<Model> dispose = new ArrayList<Model>();
 	public AssetHandler(){
 		assets = new AssetManager();

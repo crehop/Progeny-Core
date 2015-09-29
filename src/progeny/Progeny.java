@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import screens.Console;
 import screens.Player;
 import screens.SplashScreen;
+import server.Chunk;
+import server.ChunkType;
+import server.GameWorld;
 import server.Time;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -34,8 +37,8 @@ import entities.GameObject;
 
 public class Progeny extends Game implements ApplicationListener {
 	public static final String TITLE = "Progeny";
-	public static final int V_HEIGHT = 600;
-	public static final int V_WIDTH = 800;
+	public static int V_HEIGHT;
+	public static int V_WIDTH;
 	public static final float SCALE = 2.0f;
 	public static final String VERSION = "0.01 Pre-Alpha";
 	private static int activeObjects = 0;
@@ -57,6 +60,7 @@ public class Progeny extends Game implements ApplicationListener {
 	
 	public static Controls controls;
 	public static MenuControls controlsMenu;
+	public static GameWorld gameWorld;
 	
 	public static ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
@@ -79,7 +83,9 @@ public class Progeny extends Game implements ApplicationListener {
     
 	@Override
 	public void create() {
-		@SuppressWarnings("unused")
+		V_HEIGHT = 600;
+		V_WIDTH = 800;
+		
 		Thread thread = new Thread(){
 			Time time = new Time();
 		};
@@ -92,7 +98,12 @@ public class Progeny extends Game implements ApplicationListener {
 		player = new Player(0,0,10,this);
 		splash = new SplashScreen(this);
 		assets.getAssetManager().finishLoading();
-		texture = new Texture("terrain/tiles.png");
+		Gdx.graphics.setContinuousRendering(true);
+		Gdx.graphics.setVSync(true);
+		Gdx.input.setCursorCatched(false );
+		setScreen(splash);
+		multiplexer = new InputMultiplexer(ui.getStage(),controlsMenu);
+		Gdx.input.setInputProcessor(multiplexer);
 		try {
 			server = new server.ServerComms();
 		} catch (UnknownHostException e) {
@@ -101,19 +112,12 @@ public class Progeny extends Game implements ApplicationListener {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		System.out.println("Creating Server");
-		
+		}		
 		//TEST CODE REMOVE FROM FINAL GAME
 		//==================================================================
 		
 		//===========================================================
-		Gdx.graphics.setContinuousRendering(true);
-		Gdx.graphics.setVSync(true);
-		Gdx.input.setCursorCatched(false );
-		setScreen(splash);
-		multiplexer = new InputMultiplexer(ui.getStage(),controlsMenu);
-		Gdx.input.setInputProcessor(multiplexer);
+
 	}
 
 	@Override
@@ -141,6 +145,15 @@ public class Progeny extends Game implements ApplicationListener {
 			//Animals=====================================
 			sb.begin();
 			activeObjects = 0;
+			for(Chunk chunk:server.getWorld().getChunks()){
+				if(chunk.getChunk()
+						.isVisible(
+								(int)player.getLocation().getX(), 
+								(int)player.getLocation().getY())){
+					sb.draw(ChunkType.getTexture(chunk.getType()), chunk.getChunk().getLocation().getX() - player.getLocation().getX(), chunk.getChunk().getLocation().getY() - player.getLocation().getY(), chunk.getChunk().getHeight(),chunk.getChunk().getWidth());
+					activeObjects++;
+				}
+			}
 			for(GameObject object:gameObjects){
 				if(object.hasTextureRegion()&& object.isVisible((int)player.getLocation().getX(), (int)player.getLocation().getY())){
 					sb.draw(object.getTextureRegion(), object.getLocation().getX() - player.getLocation().getX(), object.getLocation().getY() - player.getLocation().getY(),object.getWidth(),object.getHeight());
