@@ -1,7 +1,6 @@
-/server/
-/packets/
+/camera/
+/control/
+/entities/
+/game/
 /progeny/
 /screens/
-/control/
-/interfaces/
-/entities/

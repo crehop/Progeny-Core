@@ -1,5 +1,9 @@
 package progeny;
 
+import game.Chunk;
+import game.ChunkType;
+import game.GameWorld;
+import game.Time;
 import interfaces.UI;
 
 import java.io.IOException;
@@ -9,10 +13,6 @@ import java.util.ArrayList;
 import screens.Console;
 import screens.Player;
 import screens.SplashScreen;
-import server.Chunk;
-import server.ChunkType;
-import server.GameWorld;
-import server.Time;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
@@ -50,7 +50,7 @@ public class Progeny extends Game implements ApplicationListener {
 	public static SplashScreen splash;
 	public static Player player;
 	public static UI ui;
-	public static server.ServerComms server;
+	public static game.ServerComms server;
 	
 	public static Environment env;
 	private static Progeny game;
@@ -105,7 +105,7 @@ public class Progeny extends Game implements ApplicationListener {
 		multiplexer = new InputMultiplexer(ui.getStage(),controlsMenu);
 		Gdx.input.setInputProcessor(multiplexer);
 		try {
-			server = new server.ServerComms();
+			server = new game.ServerComms();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -146,11 +146,9 @@ public class Progeny extends Game implements ApplicationListener {
 			sb.begin();
 			activeObjects = 0;
 			for(Chunk chunk:server.getWorld().getChunks()){
-				if(chunk.getChunk()
-						.isVisible(
-								(int)player.getLocation().getX(), 
-								(int)player.getLocation().getY())){
+				if(chunk.getChunk().isVisible((int)player.getLocation().getX(), (int)player.getLocation().getY())){
 					sb.draw(ChunkType.getTexture(chunk.getType()), chunk.getChunk().getLocation().getX() - player.getLocation().getX(), chunk.getChunk().getLocation().getY() - player.getLocation().getY(), chunk.getChunk().getHeight(),chunk.getChunk().getWidth());
+					System.out.println("chunk type = " + chunk.getType());
 					activeObjects++;
 				}
 			}

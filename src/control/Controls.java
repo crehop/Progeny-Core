@@ -2,7 +2,6 @@ package control;
 
 import progeny.Progeny;
 import screens.Console;
-import server.Location;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
 import entities.GameObject;
+import game.Location;
 
 public class Controls extends InputAdapter implements InputProcessor {
 	private boolean exitKey;

@@ -1,7 +1,7 @@
 package entities;
 
+import game.Location;
 import screens.Console;
-import server.Location;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

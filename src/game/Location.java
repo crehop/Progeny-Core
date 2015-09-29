@@ -1,4 +1,4 @@
-package server;
+package game;
 
 import com.badlogic.gdx.math.Vector3;
 

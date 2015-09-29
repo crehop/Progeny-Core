@@ -1,4 +1,4 @@
-package server;
+package game;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,7 +22,7 @@ public class GameWorld {
 				 Chunk chunk = new Chunk(xScroll, yScroll, 0, rand.nextInt(11));
 				 chunk.setID(totalChunks);
 				 worldChunk.add(chunk);
-				 xScroll += types.getWidth();
+				 xScroll += 100;
 				 totalChunks ++;
 			 }
 			 yScroll += types.getWidth();
@@ -36,16 +36,16 @@ public class GameWorld {
 		 worldChunks = world;
 		 int xScroll = 0;
 		 int yScroll = 0;
-		 System.out.println("WORLD GENERATIONS BEGINING \nWorld X size = " + world.length + "\nWorld Y size = " + world[0].length);
-		 for(int currentX = 0; currentX < world.length; currentX++){
-			 for(int currentY = 0; currentY < world[0].length; currentY++){
-				 Chunk chunk = new Chunk(xScroll, yScroll, 0, world[currentX][currentY]);
+		 for(int currentX = 0; currentX < world[0].length; currentX++){
+			 for(int currentY = 0; currentY < world.length; currentY++){
+				 Chunk chunk = new Chunk(xScroll, yScroll, 0, world[currentY][currentX]);
 				 chunk.setID(totalChunks);
 				 worldChunk.add(chunk);
 				 xScroll += ChunkType.BASE.getWidth();
 				 totalChunks ++;
+				 System.out.println(world[currentY][currentX]);
 			 }
-			 xScroll += ChunkType.BASE.getWidth();
+			 yScroll += ChunkType.BASE.getWidth();
 			 xScroll = 0;
 		 }
 	}

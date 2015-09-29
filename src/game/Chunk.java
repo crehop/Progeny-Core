@@ -1,4 +1,4 @@
-package server;
+package game;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,9 +17,11 @@ public class Chunk {
 	int ID = 0;
 	Location location;
 	Random Rand = new Random();
+	TextureRegion region;
 	
 	public Chunk(int x, int y, int z, int type){
 		this.location = new Location(x,y,z);
+		this.type = type;
 	}
 	
 	public int getType() {
@@ -47,7 +49,9 @@ public class Chunk {
 
 	public GameObject getChunk() {
 		if(chunk == null){
+			this.region = ChunkType.getTexture(type);
 			chunk = new GameObject(new Sprite(ChunkType.BASE),location);
+			chunk.setTextureRegion(this.region);
 		}
 		return chunk;
 	}

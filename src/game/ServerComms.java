@@ -1,4 +1,4 @@
-package server;
+package game;
 
 import java.io.IOException;
 import java.net.UnknownHostException;

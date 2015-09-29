@@ -1,5 +1,7 @@
 package screens;
 
+import game.ServerComms;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
@@ -10,8 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
-import server.ServerComms;
 
 public class LoginGui extends JFrame{
 	String username = "-1";
