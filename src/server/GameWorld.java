@@ -42,10 +42,10 @@ public class GameWorld {
 				 Chunk chunk = new Chunk(xScroll, yScroll, 0, world[currentX][currentY]);
 				 chunk.setID(totalChunks);
 				 worldChunk.add(chunk);
-				 xScroll += 50;
+				 xScroll += ChunkType.BASE.getWidth();
 				 totalChunks ++;
 			 }
-			 yScroll += 50;
+			 xScroll += ChunkType.BASE.getWidth();
 			 xScroll = 0;
 		 }
 	}

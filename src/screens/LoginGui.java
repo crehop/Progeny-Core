@@ -58,7 +58,6 @@ public class LoginGui extends JFrame{
 			username = "-1";
 			password = "-1";
 		}
-
 	}
 	public boolean hasHappened() {
 		if(username.equals("-1")){

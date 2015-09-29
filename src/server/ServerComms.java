@@ -46,12 +46,13 @@ public class ServerComms{
 		}
 		if(!logout){
 			packet1 = new Packet1Connect();
-			LoginGui login = new LoginGui();
-			if(!login.hasHappened()){
-				logout();
-			}
-			packet1.setUsername(login.getUsername());
-			packet1.setPassword(login.getPassword());
+			//TODO RE-ADD LOGIN SYSTEM
+			//LoginGui login = new LoginGui();
+			//if(!login.hasHappened()){
+			//	logout();
+			//}
+			packet1.setUsername("crehop");//login.getUsername());
+			packet1.setPassword("password");//login.getPassword());
 			client.sendTCP(packet1);
 			this.initializeListener();
 			if(logout){
