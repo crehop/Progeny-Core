@@ -52,6 +52,8 @@ public class Chunk {
 			this.region = ChunkType.getTexture(type);
 			chunk = new GameObject(new Sprite(ChunkType.BASE),location);
 			chunk.setTextureRegion(this.region);
+			chunk.setRegionHeight(650);
+			chunk.setYVisible(true);
 		}
 		return chunk;
 	}

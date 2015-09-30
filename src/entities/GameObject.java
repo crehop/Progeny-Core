@@ -26,6 +26,7 @@ public class GameObject extends Sprite{
     private final static BoundingBox bounds = new BoundingBox();
     private int ID = 0;
 	private TextureRegion textureRegion;
+	private boolean yVisible = false;
 
 	public GameObject(Sprite sprite, float x, float y, float z) {
 		super(sprite);
@@ -125,8 +126,13 @@ public class GameObject extends Sprite{
 	public boolean isVisible(int x,int y){
 		if(this.location.getX() < x  + Gdx.graphics.getWidth() && this.location.getX() > x  - this.getWidth() && this.location.getY() < y + Gdx.graphics.getHeight() && this.location.getY() > y - this.getHeight()){
 			return true;
+		}else if(this.yVisible){
+			return true;
 		}else{
 			return false;
 		}
+	}
+	public void setYVisible(boolean visible){
+		this.yVisible = visible;
 	}
 }

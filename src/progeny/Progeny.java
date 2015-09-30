@@ -60,7 +60,6 @@ public class Progeny extends Game implements ApplicationListener {
 	
 	public static Controls controls;
 	public static MenuControls controlsMenu;
-	public static GameWorld gameWorld;
 	
 	public static ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
@@ -147,20 +146,13 @@ public class Progeny extends Game implements ApplicationListener {
 			activeObjects = 0;
 			for(Chunk chunk:server.getWorld().getChunks()){
 				if(chunk.getChunk().isVisible((int)player.getLocation().getX(), (int)player.getLocation().getY())){
-					sb.draw(ChunkType.getTexture(chunk.getType()), chunk.getChunk().getLocation().getX() - player.getLocation().getX(), chunk.getChunk().getLocation().getY() - player.getLocation().getY(), chunk.getChunk().getHeight(),chunk.getChunk().getWidth());
-					System.out.println("chunk type = " + chunk.getType());
+					sb.draw(
+							ChunkType.getTexture(chunk.getType()),
+							chunk.getChunk().getLocation().getX() - 
+							player.getLocation().getX(), 
+							chunk.getChunk().getLocation().getY() - 
+							player.getLocation().getY(),(float)(server.getWorld().getWidth()),server.getWorld().getYStrech());
 					activeObjects++;
-				}
-			}
-			for(GameObject object:gameObjects){
-				if(object.hasTextureRegion()&& object.isVisible((int)player.getLocation().getX(), (int)player.getLocation().getY())){
-					sb.draw(object.getTextureRegion(), object.getLocation().getX() - player.getLocation().getX(), object.getLocation().getY() - player.getLocation().getY(),object.getWidth(),object.getHeight());
-					activeObjects++;
-				}else{
-					if(object.isVisible((int)player.getLocation().getX(), (int)player.getLocation().getY())){
-						sb.draw(object.getTexture(), object.getLocation().getX() - player.getLocation().getX(), object.getLocation().getY() - player.getLocation().getY(), object.getHeight(),object.getWidth());
-						activeObjects++;
-					}
 				}
 			}
 			Console.setLine6("GAMEOBJECTS = " + gameObjects.size());

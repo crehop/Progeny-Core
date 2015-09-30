@@ -12,6 +12,8 @@ public class GameWorld {
 	public int totalChunks;
 	Random rand = new Random();
 	Integer[][] worldChunks;
+	int width;
+	public int yStrech = 650;
 	
 	public GameWorld(int chunksX, int chunksY, Texture types){
 		 worldChunk = new ArrayList<Chunk>();
@@ -22,34 +24,41 @@ public class GameWorld {
 				 Chunk chunk = new Chunk(xScroll, yScroll, 0, rand.nextInt(11));
 				 chunk.setID(totalChunks);
 				 worldChunk.add(chunk);
-				 xScroll += 100;
+				 yScroll += 650;
 				 totalChunks ++;
 			 }
-			 yScroll += types.getWidth();
 			 xScroll = 0;
 		 }
 
 	}
 
-	public GameWorld(Integer[][] world) {
-		 worldChunk = new ArrayList<Chunk>();
-		 worldChunks = world;
-		 int xScroll = 0;
-		 int yScroll = 0;
-		 for(int currentX = 0; currentX < world[0].length; currentX++){
-			 for(int currentY = 0; currentY < world.length; currentY++){
-				 Chunk chunk = new Chunk(xScroll, yScroll, 0, world[currentY][currentX]);
-				 chunk.setID(totalChunks);
-				 worldChunk.add(chunk);
-				 xScroll += ChunkType.BASE.getWidth();
-				 totalChunks ++;
-				 System.out.println(world[currentY][currentX]);
-			 }
-			 yScroll += ChunkType.BASE.getWidth();
-			 xScroll = 0;
-		 }
+	public GameWorld(Integer[][] world, int width) {
+		this.width = width;
+		worldChunk = new ArrayList<Chunk>();
+		worldChunks = world;
+		int xScroll = 0;
+		int yScroll = 0;
+		for(int currentX = 0; currentX < world.length; currentX++){
+			for(int currentY = 0; currentY < world[0].length; currentY++){
+				Chunk chunk = new Chunk(xScroll, yScroll, 0, world[currentX][currentY]);
+				chunk.setID(totalChunks);
+				worldChunk.add(chunk);
+				yScroll += yStrech;
+				totalChunks ++;
+				System.out.println("CHUNK RECIEVED TYPE " + chunk.getType() + " Y=" + currentY++);
+			}
+			xScroll += ChunkType.BASE.getWidth();
+			yScroll = 0;
+		}
 	}
 	public ArrayList<Chunk> getChunks(){
 		return worldChunk;
+	}
+	public float getWidth() {
+		return width;
+	}
+
+	public float getYStrech() {
+		return this.yStrech;
 	}
 }

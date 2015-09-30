@@ -28,6 +28,7 @@ public class ServerComms{
 	private boolean logout = false;
 	private boolean loginConfirm = false;
 	private Integer[][] worldChunks;
+	private int width;
 	
 	
 	public ServerComms() throws UnknownHostException, IOException{
@@ -94,6 +95,7 @@ public class ServerComms{
 	    			if(packet7.worldRecieved()){
 						System.out.println("World Recieved, Creating.....");
 	    				worldChunks = packet7.getWorld();
+	    				width = packet7.getWorldWidth();
 	    			}else{
 	    				JOptionPane.showMessageDialog(null,"WORLD LOAD FAILED!");
 	    				logout();
@@ -104,13 +106,13 @@ public class ServerComms{
 	}
 	public ArrayList<Chunk> getWorldChunks(){
 		if(world == null){
-			world = new GameWorld(worldChunks);
+			world = new GameWorld(worldChunks, width);
 		}
 		return this.world.worldChunk;
 	}
 	public GameWorld getWorld(){
 		if(world == null){
-			world = new GameWorld(worldChunks);
+			world = new GameWorld(worldChunks, width);
 		}
 		return world;
 	}
