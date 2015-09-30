@@ -2,6 +2,7 @@ package progeny;
 
 import game.Chunk;
 import game.ChunkType;
+import game.Effects;
 import game.GameWorld;
 import game.Time;
 import interfaces.UI;
@@ -140,8 +141,7 @@ public class Progeny extends Game implements ApplicationListener {
 	  	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
 	  	    //=========================================
-			
-			//Animals=====================================
+			//Chunks=====================================
 			sb.begin();
 			activeObjects = 0;
 			for(Chunk chunk:server.getWorld().getChunks()){
@@ -157,11 +157,14 @@ public class Progeny extends Game implements ApplicationListener {
 			}
 			Console.setLine6("GAMEOBJECTS = " + gameObjects.size());
 			Console.setLine7("ACTIVE CHUNKS = " + activeObjects);
-			
 	        sb.end();
+	        
+	        //CHUNK GRID=================================
+	        Effects.drawGrid(cam);
 			//=========================================
 			Console.render();
 			//Effects and movement==================================
+
 			sb.begin();
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -228,5 +231,4 @@ public class Progeny extends Game implements ApplicationListener {
 	public static void setCam(OrthographicCamera cam) {
 		Progeny.cam = cam;
 	}
-
 }
