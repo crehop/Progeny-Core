@@ -5,6 +5,8 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import entities.Chunk;
+
 public class GameWorld {
 	ArrayList<Chunk> worldChunk; 
 	public int activeChunks;

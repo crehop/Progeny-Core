@@ -1,22 +1,22 @@
 package game;
 
+import interfaces.Dialogs;
+
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
 
 import packets.Packet;
 import packets.Packet1Connect;
 import packets.Packet7WorldCreation;
 import progeny.Progeny;
-import screens.LoginGui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+
+import entities.Chunk;
 
 public class ServerComms{
 	private String configurableIP = "127.0.0.1";
@@ -42,7 +42,7 @@ public class ServerComms{
 		try{
 			client.connect(5000, "127.0.0.1", 54555, 54777);
 		}catch(IOException e){
-			JOptionPane.showMessageDialog(null, "SERVER FAILED TO START, CANNOT CONNECT! \n PLEASE CONFIRM IP EXAMPLE:127.0.0.1:55565");
+			Dialogs.printDialog("SERVER FAILED TO START, CANNOT CONNECT! \n PLEASE CONFIRM IP EXAMPLE:127.0.0.1:55565");
 			logout();
 		}
 		if(!logout){
@@ -84,10 +84,10 @@ public class ServerComms{
 	    		if(object instanceof Packet1Connect){
 	    			packet1 = (Packet1Connect)object;
 	    			if(packet1.logout()){
-		    			JOptionPane.showMessageDialog(null,"CONNECTION DENIED: BAD USERNAME/PASSWORD");
+	    				Dialogs.printDialog("CONNECTION DENIED: BAD USERNAME/PASSWORD");
 	    				Gdx.app.exit();
 	    			}else{
-	    				JOptionPane.showMessageDialog(null,"CONNECTION CONFIRMED: " + packet1.getUsername() + "\n Welcome to Hopnet!");
+	    				Dialogs.printDialog("CONNECTION CONFIRMED: " + packet1.getUsername() + "\n Welcome to Hopnet!");
 	    				loginConfirm = true;
 	    			}
 	    		}else if(object instanceof Packet7WorldCreation){
@@ -97,7 +97,7 @@ public class ServerComms{
 	    				worldChunks = packet7.getWorld();
 	    				width = packet7.getWorldWidth();
 	    			}else{
-	    				JOptionPane.showMessageDialog(null,"WORLD LOAD FAILED!");
+	    				Dialogs.printDialog("WORLD LOAD FAILED!");
 	    				logout();
 	    			}
 	    		}

@@ -1,4 +1,4 @@
-package screens;
+package interfaces;
 
 import game.ServerComms;
 
@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class LoginGui extends JFrame{
-	String username = "-1";
-	String password = "-1";
+	private String username = "-1";
+	private String password = "-1";
 	boolean logout = false;
 	public LoginGui(){
 		JPanel panel = new JPanel(new BorderLayout(5, 5));

@@ -1,4 +1,4 @@
-package game;
+package entities;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,7 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import entities.GameObject;
+import game.ChunkType;
+import game.Location;
 
 public class Chunk {
 	private GameObject chunk;

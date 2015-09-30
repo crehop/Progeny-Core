@@ -1,6 +1,5 @@
 package progeny;
 
-import game.Chunk;
 import game.ChunkType;
 import game.Effects;
 import game.GameWorld;
@@ -34,6 +33,7 @@ import com.badlogic.gdx.utils.Array;
 import control.Controls;
 import control.MenuControls;
 import entities.AssetHandler;
+import entities.Chunk;
 import entities.GameObject;
 
 public class Progeny extends Game implements ApplicationListener {
