@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 import entities.Chunk;
+import entities.VCreature;
 
 public class GameWorld {
 	public static int PPM = 100;
@@ -44,14 +45,23 @@ public class GameWorld {
 		worldChunk = new ArrayList<Chunk>();
 		worldChunks = worldArray;
 		def = new BodyDef();
-		def.position.set(2000,7000);
+		def.position.set(0 - Gdx.graphics.getWidth()/2,0 - Gdx.graphics.getHeight()/2);
 		def.type = BodyType.StaticBody;
 		body = world.createBody(def);
-		shape.setAsBox(50, 5);
+		float[] worldBorder = new float[8];
+		worldBorder[0] = 0f;
+		worldBorder[1] = 7220;
+		worldBorder[2] = 0;
+		worldBorder[3] = 34500;
+		worldBorder[4] = 23000;
+		worldBorder[5] = 34500;
+		worldBorder[6] = 23000;
+		worldBorder[7] = 7220;
+		shape.set(worldBorder);
+		
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		body.createFixture(fdef);
-
 		int xScroll = 0;
 		int yScroll = 0;
 		for(int currentX = 0; currentX < worldArray.length; currentX++){
@@ -67,6 +77,7 @@ public class GameWorld {
 			yScroll = 0;
 		}
 		this.created = true;	 
+		new VCreature(world);
 	}
 	public ArrayList<Chunk> getChunks(){
 		return worldChunk;
@@ -82,7 +93,6 @@ public class GameWorld {
 
 	public void update(float dt){
 		this.world.step(dt, 6, 2);
-    	System.out.println("UPDATED " + dt + " " + this.created);
 		renderer.render(world, Progeny.getCam().combined);
 	}
 }
