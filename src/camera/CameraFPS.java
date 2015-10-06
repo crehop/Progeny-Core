@@ -1,5 +1,6 @@
 package camera;
 
+import game.GameWorld;
 import game.Location;
 import progeny.Progeny;
 
@@ -28,6 +29,9 @@ public class CameraFPS {
 		Progeny.setCam(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		Progeny.getCam().near = near;
 		Progeny.getCam().far = far;
+		Progeny.setB2DCam(new OrthographicCamera(Gdx.graphics.getWidth()/GameWorld.PPM, Gdx.graphics.getHeight()/GameWorld.PPM));
+		Progeny.getB2DCam().near = near;
+		Progeny.getB2DCam().far = far;
 		viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Progeny.getCam());
 	}
 	

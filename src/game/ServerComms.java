@@ -120,4 +120,7 @@ public class ServerComms{
 		Progeny.getGame().dispose();
 		this.logout  = true;
 	}
+	public boolean loggedIn() {
+		return this.loginConfirm;
+	}
 }

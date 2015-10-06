@@ -34,6 +34,10 @@ public class Player extends CameraFPS implements Screen{
 		Progeny.getCam().position.set(this.location.getPosition());
 		Progeny.getCam().direction.set(0,0,-1);
 		this.updateLocation();
+		Progeny.getB2DCam().up.set(0, 1, 0);
+		Progeny.getB2DCam().position.set(this.location.getPosition());
+		Progeny.getB2DCam().direction.set(0,0,-1);
+		this.updateLocation();
 	}
 	@Override
 	public void resize(int width, int height) {

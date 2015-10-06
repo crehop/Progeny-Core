@@ -47,6 +47,7 @@ public class Progeny extends Game implements ApplicationListener {
 	
 	private static SpriteBatch sb;
 	private static OrthographicCamera cam;
+	private static OrthographicCamera B2Dcam;
     private static GameObject test;
 	public static SplashScreen splash;
 	public static Player player;
@@ -61,6 +62,7 @@ public class Progeny extends Game implements ApplicationListener {
 	
 	public static Controls controls;
 	public static MenuControls controlsMenu;
+	public static GameWorld world;
 	
 	public static ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
@@ -95,7 +97,7 @@ public class Progeny extends Game implements ApplicationListener {
 		controls = new Controls(this);
 		controlsMenu = new MenuControls(this);
 		sb = new SpriteBatch();
-		player = new Player(0,0,10,this);
+		player = new Player(2000,7000,10,this);
 		splash = new SplashScreen(this);
 		assets.getAssetManager().finishLoading();
 		Gdx.graphics.setContinuousRendering(true);
@@ -119,7 +121,6 @@ public class Progeny extends Game implements ApplicationListener {
 		//===========================================================
 
 	}
-
 	@Override
 	public void render() {	
 		Console.setLine1("FPS:" + Gdx.graphics.getFramesPerSecond());
@@ -158,6 +159,10 @@ public class Progeny extends Game implements ApplicationListener {
 			Console.setLine6("GAMEOBJECTS = " + gameObjects.size());
 			Console.setLine7("ACTIVE CHUNKS = " + activeObjects);
 	        sb.end();
+	        //WORLD RENDER
+	        if(server.loggedIn()){
+	        	server.getWorld().update((float)(1.0f/Gdx.graphics.getFramesPerSecond()));
+	        }
 	        
 	        //CHUNK GRID=================================
 	        Effects.drawGrid(cam);
@@ -230,5 +235,12 @@ public class Progeny extends Game implements ApplicationListener {
 
 	public static void setCam(OrthographicCamera cam) {
 		Progeny.cam = cam;
+	}
+	public static OrthographicCamera getB2DCam() {
+		return B2Dcam;
+	}
+
+	public static void setB2DCam(OrthographicCamera cam) {
+		Progeny.B2Dcam = cam;
 	}
 }
