@@ -25,7 +25,6 @@ public class GameWorld {
 	ArrayList<Chunk> worldChunk; 
 	private int activeChunks;
 	private int activeObjects;
-	private int totalChunks;
 	private boolean created = false;
 	Random rand = new Random();
 	Integer[][] worldChunks;
@@ -36,46 +35,12 @@ public class GameWorld {
 	private Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 	
 	//CREATURE 
-	PolygonShape shape = new PolygonShape();
-	Body body;
-	BodyDef def;
-
 	public GameWorld(Integer[][] worldArray, int width) {
 		this.width = width;
 		worldChunk = new ArrayList<Chunk>();
 		worldChunks = worldArray;
-		def = new BodyDef();
-		def.position.set(0 - Gdx.graphics.getWidth()/2,0 - Gdx.graphics.getHeight()/2);
-		def.type = BodyType.StaticBody;
-		body = world.createBody(def);
-		float[] worldBorder = new float[8];
-		worldBorder[0] = 0f;
-		worldBorder[1] = 7220;
-		worldBorder[2] = 0;
-		worldBorder[3] = 34500;
-		worldBorder[4] = 23000;
-		worldBorder[5] = 34500;
-		worldBorder[6] = 23000;
-		worldBorder[7] = 7220;
-		shape.set(worldBorder);
-		
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape;
-		body.createFixture(fdef);
-		int xScroll = 0;
-		int yScroll = 0;
-		for(int currentX = 0; currentX < worldArray.length; currentX++){
-			for(int currentY = 0; currentY < worldArray[0].length; currentY++){
-				Chunk chunk = new Chunk(xScroll, yScroll, 0, worldArray[currentX][currentY]);
-				chunk.setID(totalChunks);
-				worldChunk.add(chunk);
-				yScroll += yStrech;
-				totalChunks ++;
-				System.out.println("CHUNK RECIEVED TYPE " + chunk.getType() + " Y=" + currentY++);
-			}
-			xScroll += ChunkType.BASE.getWidth();
-			yScroll = 0;
-		}
+		WorldUtils.GenerateWorldBorder(world, 0, 23000, 7220, 34500);
+		WorldUtils.GenerateChunks(worldArray, worldChunk, yStrech);
 		this.created = true;	 
 		new VCreature(world);
 	}
