@@ -156,8 +156,8 @@ public class Progeny extends Game implements ApplicationListener {
 					activeObjects++;
 				}
 			}
-			Console.setLine6("GAMEOBJECTS = " + gameObjects.size());
-			Console.setLine7("ACTIVE CHUNKS = " + activeObjects);
+			Console.setLine6("GAME OBJECTS = " + world.getWorld().getBodyCount());
+			Console.setLine7("ACTIVE OBJECTS = " + world.getWorld().getContactCount());
 	        sb.end();
 	        //WORLD RENDER
 	        if(server.loggedIn()){

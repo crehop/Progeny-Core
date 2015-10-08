@@ -48,8 +48,7 @@ public class WorldUtils {
 		worldBorder[7] = y1 - 2;
 		shape.set(worldBorder);
 		fdef.shape = shape;
-		body.createFixture(fdef);
-		
+		body.createFixture(fdef);		
 		worldBorder[0] = x1;
 		worldBorder[1] = y2;
 		worldBorder[2] = x2;
@@ -73,6 +72,7 @@ public class WorldUtils {
 		shape.set(worldBorder);
 		fdef.shape = shape;
 		body.createFixture(fdef);
+		body.setSleepingAllowed(false);
 	}
 	
 	public static void GenerateChunks(Integer[][] worldArray,ArrayList<Chunk> worldChunk, float yStrech){
@@ -85,7 +85,6 @@ public class WorldUtils {
 				chunk.setID(totalChunks);
 				worldChunk.add(chunk);
 				yScroll += yStrech;
-				System.out.println("CHUNK RECIEVED TYPE " + chunk.getType() + " Y=" + currentY++);
 			}
 			xScroll += ChunkType.BASE.getWidth();
 			yScroll = 0;
