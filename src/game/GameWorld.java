@@ -29,33 +29,34 @@ public class GameWorld {
 	Random rand = new Random();
 	Integer[][] worldChunks;
 	int width;
-	private float gravity = -8.1f;
+	private float gravity = -9.8f;
 	private int yStrech = 650;
 	private World world = new World(new Vector2(0,gravity), false);
 	private Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 	
 	//CREATURE 
 	public GameWorld(Integer[][] worldArray, int width) {
+		Progeny.world = this;
 		this.width = width;
 		worldChunk = new ArrayList<Chunk>();
 		worldChunks = worldArray;
-		WorldUtils.GenerateWorldBorder(world, 0, 23000, 7142, 34500);
+		WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 7142, 34500);
 		WorldUtils.GenerateChunks(worldArray, worldChunk, yStrech);
 		this.created = true;	 
-		new Creature(world, new Location(2000,7000,0));
-		new Creature(world, new Location(2000,7010,0));
-		new Creature(world, new Location(2000,7020,0));
-		new Creature(world, new Location(2000,7030,0));
-		new Creature(world, new Location(2000,7040,0));
-		new Creature(world, new Location(2000,7050,0));
-		new Creature(world, new Location(2000,7060,0));
-		new Creature(world, new Location(2000,7070,0));
-		new Creature(world, new Location(2000,7080,0));
-		new Creature(world, new Location(2000,7090,0));
-		new Creature(world, new Location(2000,7100,0));
-		new Creature(world, new Location(2000,7110,0));
-		new Creature(world, new Location(2000,7120,0));
-		new Creature(world, new Location(2000,7130,0));
+		new Creature(getWorld(), new Location(2000,7000,0));
+		new Creature(getWorld(), new Location(2000,7010,0));
+		new Creature(getWorld(), new Location(2000,7020,0));
+		new Creature(getWorld(), new Location(2000,7030,0));
+		new Creature(getWorld(), new Location(2000,7040,0));
+		new Creature(getWorld(), new Location(2000,7050,0));
+		new Creature(getWorld(), new Location(2000,7060,0));
+		new Creature(getWorld(), new Location(2000,7070,0));
+		new Creature(getWorld(), new Location(2000,7080,0));
+		new Creature(getWorld(), new Location(2000,7090,0));
+		new Creature(getWorld(), new Location(2000,7100,0));
+		new Creature(getWorld(), new Location(2000,7110,0));
+		new Creature(getWorld(), new Location(2000,7120,0));
+		new Creature(getWorld(), new Location(2000,7130,0));
 
 	}
 	public ArrayList<Chunk> getChunks(){
@@ -71,7 +72,14 @@ public class GameWorld {
 	
 
 	public void update(float dt){
-		this.world.step(dt, 6, 2);
-		renderer.render(world, Progeny.getCam().combined);
+		this.getWorld().step(dt, 6, 2);
+		renderer.render(getWorld(), Progeny.getCam().combined);
+	}
+	public World getWorld() {
+		System.out.println("WORLD = " + world.getBodyCount());
+		return world;
+	}
+	public void setWorld(World world) {
+		this.world = world;
 	}
 }

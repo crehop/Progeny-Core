@@ -1,5 +1,7 @@
 package control;
 
+import java.util.Random;
+
 import progeny.Progeny;
 import screens.Console;
 
@@ -15,6 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
+import entities.Creature;
 import entities.GameObject;
 import game.Location;
 
@@ -39,7 +42,6 @@ public class Controls extends InputAdapter implements InputProcessor {
 	private boolean testRight;
 	@SuppressWarnings("unused")
 	private boolean testUp;
-	@SuppressWarnings("unused")
 	private boolean testDown;
 	@SuppressWarnings("unused")
 	private Location current;
@@ -66,6 +68,7 @@ public class Controls extends InputAdapter implements InputProcessor {
 	private Vector3 position = new Vector3();
 	private Vector3 direction = new Vector3();
 	private Vector2 mousePosition = new Vector2();
+	Random rand = new Random();
 	//========================
 	public Controls(Progeny game){
 		this.game = game;
@@ -81,6 +84,13 @@ public class Controls extends InputAdapter implements InputProcessor {
 			
 		}
 		if(menu){
+		}
+		if(testDown){
+			Console.setLine8("PHYSICS ENTITIES ACTIVE / GRAVITY: " + Progeny.world.getWorld().getBodyCount() +  "/" + Progeny.world.getWorld().getGravity());
+			new Creature(Progeny
+					.world
+					.getWorld(), 
+					new Location(2000 + rand.nextInt(400),7180 + rand.nextFloat() * 10000,0));
 		}
 		if(forward){
 			if(Gdx.input.isCursorCatched()){
@@ -183,6 +193,9 @@ public class Controls extends InputAdapter implements InputProcessor {
 					testBack = true;
 				}
 				return false;
+			case Input.Keys.E:
+				this.testDown = true;
+				return false;
 			case Input.Keys.LEFT:
 				if(Gdx.input.isCursorCatched()){
 					testLeft = true;
@@ -227,6 +240,7 @@ public class Controls extends InputAdapter implements InputProcessor {
 			case Input.Keys.ENTER:
 				return false;
 			case Input.Keys.E:
+				this.testDown = false;
 				return false;
 			case Input.Keys.W:
 				forward = false;
