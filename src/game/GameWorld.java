@@ -4,19 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import packets.Packet2MoveMent;
 import progeny.Progeny;
 import screens.Console;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
@@ -56,20 +49,20 @@ public class GameWorld {
 		WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 7142, 34500);
 		WorldUtils.GenerateChunks(worldArray, worldChunk, yStrech);
 		this.created = true;	 
-		new Creature(getWorld(), new Location(2000,7000,0));
-		new Creature(getWorld(), new Location(2000,7010,0));
-		new Creature(getWorld(), new Location(2000,7020,0));
-		new Creature(getWorld(), new Location(2000,7030,0));
-		new Creature(getWorld(), new Location(2000,7040,0));
-		new Creature(getWorld(), new Location(2000,7050,0));
-		new Creature(getWorld(), new Location(2000,7060,0));
-		new Creature(getWorld(), new Location(2000,7070,0));
-		new Creature(getWorld(), new Location(2000,7080,0));
-		new Creature(getWorld(), new Location(2000,7090,0));
-		new Creature(getWorld(), new Location(2000,7100,0));
-		new Creature(getWorld(), new Location(2000,7110,0));
-		new Creature(getWorld(), new Location(2000,7120,0));
-		new Creature(getWorld(), new Location(2000,7130,0));
+		//new Creature(getWorld(), new Location(2000,7000,0));
+		//new Creature(getWorld(), new Location(2000,7010,0));
+		//new Creature(getWorld(), new Location(2000,7020,0));
+		//new Creature(getWorld(), new Location(2000,7030,0));
+		//new Creature(getWorld(), new Location(2000,7040,0));
+		//new Creature(getWorld(), new Location(2000,7050,0));
+		//new Creature(getWorld(), new Location(2000,7060,0));
+		//new Creature(getWorld(), new Location(2000,7070,0));
+		//new Creature(getWorld(), new Location(2000,7080,0));
+		//new Creature(getWorld(), new Location(2000,7090,0));
+		//new Creature(getWorld(), new Location(2000,7100,0));
+		//new Creature(getWorld(), new Location(2000,7110,0));
+		//new Creature(getWorld(), new Location(2000,7120,0));
+		//new Creature(getWorld(), new Location(2000,7130,0));
 	}
 	public ArrayList<Chunk> getChunks(){
 		return worldChunk;
@@ -81,6 +74,10 @@ public class GameWorld {
 		return this.yStrech;
 	}
 	public void update(float dt){
+		if(System.nanoTime()%1000 <= 2){
+			Progeny.server.updateBodies();
+			Console.setLine2("CHECKED!");
+		}
 		Console.setLine3("LAG DURATION:" + duration);
 		count = 1;
 		bodyHibernation = 0;;

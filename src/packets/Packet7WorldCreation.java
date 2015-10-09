@@ -5,7 +5,7 @@ import world.WorldCreation;
 public class Packet7WorldCreation extends Packet {
 	Integer[][] world;
 	private boolean worldRecieved = false;
-	private int width = 1;
+	private int width;
 	public Packet7WorldCreation(Integer[][] world, int width){
 		this.width = width;
 		this.world = world;

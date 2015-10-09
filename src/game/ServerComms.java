@@ -4,14 +4,28 @@ import interfaces.Dialogs;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.rmi.AccessException;
 import java.util.ArrayList;
 
 import packets.Packet;
 import packets.Packet1Connect;
+import packets.Packet2Body;
+import packets.Packet3RequestBody;
 import packets.Packet7WorldCreation;
+import packets.Packet8WorldInfo;
 import progeny.Progeny;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -24,21 +38,41 @@ public class ServerComms{
 	private GameWorld world = null;
 	private Client client;
 	private Packet1Connect packet1;
+	private Packet2Body packet2;
+	private Packet8WorldInfo packet8;
 	private Packet7WorldCreation packet7;
 	private boolean logout = false;
 	private boolean loginConfirm = false;
 	private Integer[][] worldChunks;
 	private int width;
+	private boolean worldTransfer = false;
+	private int count = 0;
+	private int count2 = 0;
 	
 	
 	public ServerComms() throws UnknownHostException, IOException{
 		client = new Client();
 		client.start();
 		client.getKryo().register(Packet.class);
+		client.getKryo().register(CircleShape.class);
+		client.getKryo().register(PolygonShape.class);
+		client.getKryo().register(Array.class);
+		client.getKryo().register(Object[].class);
+		client.getKryo().register(Vector2.class);
+		client.getKryo().register(Fixture.class);
+		client.getKryo().register(FixtureDef.class);
+		client.getKryo().register(BodyDef.class);
+		client.getKryo().register(BodyType.class);
+		client.getKryo().register(Filter.class);
 		client.getKryo().register(Packet1Connect.class);
+		client.getKryo().register(Packet2Body.class);
+		client.getKryo().register(Packet3RequestBody.class);
+		client.getKryo().register(Packet8WorldInfo.class);
 		client.getKryo().register(Packet7WorldCreation.class);
 		client.getKryo().register(Integer[][].class);
 		client.getKryo().register(Integer[].class);
+		client.getKryo().register(float[].class);
+
 		try{
 			client.connect(5000, "127.0.0.1", 54555, 54777);
 		}catch(IOException e){
@@ -100,6 +134,23 @@ public class ServerComms{
 	    				Dialogs.printDialog("WORLD LOAD FAILED!");
 	    				logout();
 	    			}
+	    		}else if(object instanceof Packet2Body){
+	    			packet2 = (Packet2Body)object;
+	    			BodyDef bdef = packet2.getBodyDef();
+	    			FixtureDef fdef = new FixtureDef();
+	    			CircleShape shape2 = new CircleShape();
+	    			shape2.setRadius(20.0f);
+	    			fdef.shape = shape2;
+	    			fdef.density = 200;
+	    			fdef.friction = 1000;
+	    			Body body = Progeny.server.getWorld().getWorld().createBody(bdef);
+	    			body.createFixture(fdef);
+	    			count = packet2.getCount();
+	    			System.out.println("BODY RECIEVED" + body.getPosition().x + "/" + body.getPosition().y);
+	    		}else if(object instanceof Packet8WorldInfo){
+	    			
+	    		}else{
+	    			
 	    		}
 	    	}
 	    }});		
@@ -122,5 +173,18 @@ public class ServerComms{
 	}
 	public boolean loggedIn() {
 		return this.loginConfirm;
+	}
+	public void updateBodies(){
+		if(!worldTransfer){
+			new Packet8WorldInfo();
+		}
+		Packet3RequestBody ask = new Packet3RequestBody();
+		if(count2>count){
+			count2 = 0;
+		}
+		ask.setID(count2);
+		count2++;
+		client.sendTCP(ask);
+		
 	}
 }
