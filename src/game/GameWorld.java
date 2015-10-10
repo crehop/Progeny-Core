@@ -17,6 +17,8 @@ import entities.Chunk;
 import entities.Creature;
 
 public class GameWorld {
+	private long lastNanoTime = -1;
+	private long thisNanoTime = -1;
 	public static int PPM = 100;
 	ArrayList<Chunk> worldChunk; 
 	private int activeChunks;
@@ -74,10 +76,15 @@ public class GameWorld {
 		return this.yStrech;
 	}
 	public void update(float dt){
-		if(System.nanoTime()%1000 <= 2){
-			Progeny.server.updateBodies();
-			Console.setLine2("CHECKED!");
+		
+		if(this.lastNanoTime == -1){
+			this.lastNanoTime = System.nanoTime();
 		}
+		if(((System.nanoTime()/1000000000) - (this.lastNanoTime/1000000000)) > 2){
+			Progeny.server.updateBodies();
+			this.lastNanoTime = System.nanoTime();
+		}
+		Console.setLine2("" + (System.nanoTime()/1000000000 - this.lastNanoTime/1000000000));
 		Console.setLine3("LAG DURATION:" + duration);
 		count = 1;
 		bodyHibernation = 0;;

@@ -14,6 +14,7 @@ import packets.Packet3RequestBody;
 import packets.Packet7WorldCreation;
 import packets.Packet8WorldInfo;
 import progeny.Progeny;
+import world.Console;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -48,7 +50,17 @@ public class ServerComms{
 	private boolean worldTransfer = false;
 	private int count = 0;
 	private int count2 = 0;
-	
+	private Vector2 collisionPoint;
+	private Fixture collided;
+	private Vector2 p1;
+	private Vector2 p2;
+	RayCastCallback callback = new RayCastCallback(){
+		@Override
+		public float reportRayFixture(Fixture col, Vector2 v1, Vector2 v2,
+				float arg3) {
+			collided = col;
+			return 0;
+		}};
 	
 	public ServerComms() throws UnknownHostException, IOException{
 		client = new Client();
@@ -139,14 +151,19 @@ public class ServerComms{
 	    			BodyDef bdef = packet2.getBodyDef();
 	    			FixtureDef fdef = new FixtureDef();
 	    			CircleShape shape2 = new CircleShape();
+	    			//p1 = new Vector2(packet2.getBodyDef().position.x, packet2.getBodyDef().position.y);
+	    			//p2 = new Vector2(packet2.getBodyDef().position.x, packet2.getBodyDef().position.y);
+	    			//Progeny.server.getWorld().getWorld().rayCast(callback, p1, p2);
+	    			if(collided != null)Console.setLine2("" + collided.toString());
 	    			shape2.setRadius(20.0f);
 	    			fdef.shape = shape2;
 	    			fdef.density = 200;
 	    			fdef.friction = 1000;
+	    			System.out.println("BODY RECIEVED" + bdef.position.x + "/" + bdef.position.y);
+	    			bdef.position.set(bdef.position.x - Gdx.graphics.getWidth()/2, bdef.position.y - Gdx.graphics.getHeight()/2);
 	    			Body body = Progeny.server.getWorld().getWorld().createBody(bdef);
 	    			body.createFixture(fdef);
 	    			count = packet2.getCount();
-	    			System.out.println("BODY RECIEVED" + body.getPosition().x + "/" + body.getPosition().y);
 	    		}else if(object instanceof Packet8WorldInfo){
 	    			
 	    		}else{
