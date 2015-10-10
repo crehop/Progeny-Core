@@ -52,13 +52,13 @@ public class ServerComms{
 	private int count2 = 0;
 	private Vector2 collisionPoint;
 	private Fixture collided;
-	private Vector2 p1;
-	private Vector2 p2;
+	public Vector2 p1 = new Vector2();
+	public Vector2 p2 = new Vector2();
 	RayCastCallback callback = new RayCastCallback(){
 		@Override
 		public float reportRayFixture(Fixture col, Vector2 v1, Vector2 v2,
 				float arg3) {
-			collided = col;
+			System.out.println("RAY CHECK:" + v1.x + "/" + v1.y + "/" + col.toString());
 			return 0;
 		}};
 	
@@ -151,9 +151,9 @@ public class ServerComms{
 	    			BodyDef bdef = packet2.getBodyDef();
 	    			FixtureDef fdef = new FixtureDef();
 	    			CircleShape shape2 = new CircleShape();
-	    			//p1 = new Vector2(packet2.getBodyDef().position.x, packet2.getBodyDef().position.y);
-	    			//p2 = new Vector2(packet2.getBodyDef().position.x, packet2.getBodyDef().position.y);
-	    			//Progeny.server.getWorld().getWorld().rayCast(callback, p1, p2);
+	    			p1 = p1.set(packet2.getBodyDef().position.x, packet2.getBodyDef().position.y);
+	    			p2 = p2.set((packet2.getBodyDef().position.x + 10.01f), (packet2.getBodyDef().position.y));
+	    			Progeny.server.getWorld().getWorld().rayCast(callback, p1, p2);
 	    			if(collided != null)Console.setLine2("" + collided.toString());
 	    			shape2.setRadius(20.0f);
 	    			fdef.shape = shape2;

@@ -334,7 +334,7 @@ public class Controls extends InputAdapter implements InputProcessor {
 	}
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
+		Progeny.getCam().zoom += amount;
 		return false;
 	}
 	@Override

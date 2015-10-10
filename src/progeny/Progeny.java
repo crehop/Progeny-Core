@@ -27,6 +27,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -53,6 +55,7 @@ public class Progeny extends Game implements ApplicationListener {
 	public static Player player;
 	public static UI ui;
 	public static game.ServerComms server;
+	public static ShapeRenderer sr;
 	
 	public static Environment env;
 	private static Progeny game;
@@ -106,6 +109,7 @@ public class Progeny extends Game implements ApplicationListener {
 		setScreen(splash);
 		multiplexer = new InputMultiplexer(ui.getStage(),controlsMenu);
 		Gdx.input.setInputProcessor(multiplexer);
+		sr = new ShapeRenderer();
 		try {
 			server = new game.ServerComms();
 		} catch (UnknownHostException e) {
@@ -167,7 +171,15 @@ public class Progeny extends Game implements ApplicationListener {
 	        //CHUNK GRID=================================
 	        Effects.drawGrid(cam);
 			//=========================================
-			Console.render();
+			//CONSOLE RENDER
+	        Console.render();
+			//===================
+			//SHAPE RENDERER LOOP
+			sr.begin(ShapeType.Line);
+			sr.setProjectionMatrix(cam.combined);
+			sr.line(server.p1, server.p2);
+			sr.end();
+			//====================
 			//Effects and movement==================================
 
 			sb.begin();
@@ -178,6 +190,8 @@ public class Progeny extends Game implements ApplicationListener {
 			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 	  	    //=========================================
+			
+
 			
 		//LOADING LOOP =========================================================================================================
 	      }else{

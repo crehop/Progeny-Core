@@ -84,7 +84,6 @@ public class GameWorld {
 			Progeny.server.updateBodies();
 			this.lastNanoTime = System.nanoTime();
 		}
-		Console.setLine2("" + (System.nanoTime()/1000000000 - this.lastNanoTime/1000000000));
 		Console.setLine3("LAG DURATION:" + duration);
 		count = 1;
 		bodyHibernation = 0;;
