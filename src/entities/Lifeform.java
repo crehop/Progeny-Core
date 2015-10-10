@@ -42,7 +42,7 @@ public abstract class Lifeform {
 		this.inertiaVector = update.inertiaVector;
 		this.bodyParts = update.bodyParts;
 		this.bodyColors = update.bodyColors;
-		this.reproductionTime = reproductionTime;
+		this.reproductionTime = update.reproductionTime;
 	}
 	public void setID(int ID){
 		

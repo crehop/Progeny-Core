@@ -4,11 +4,9 @@ import game.Location;
 import screens.Console;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 
 public class GameObject extends Sprite{
 	Location location;
@@ -23,7 +21,6 @@ public class GameObject extends Sprite{
     public final Vector3 center = new Vector3();
     public final Vector3 dimensions = new Vector3();
     public final float radius;
-    private final static BoundingBox bounds = new BoundingBox();
     private int ID = 0;
 	private TextureRegion textureRegion;
 	private boolean yVisible = false;

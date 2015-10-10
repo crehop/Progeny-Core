@@ -4,7 +4,6 @@ import interfaces.Dialogs;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.rmi.AccessException;
 import java.util.ArrayList;
 
 import packets.Packet;
@@ -36,7 +35,8 @@ import entities.Chunk;
 
 public class ServerComms{
 	private String configurableIP = "127.0.0.1";
-	private int configurablePORT = 12253;
+	private int configurablePORT1 = 54555;
+	private int configurablePORT2 = 54777;
 	private GameWorld world = null;
 	private Client client;
 	private Packet1Connect packet1;
@@ -50,7 +50,6 @@ public class ServerComms{
 	private boolean worldTransfer = false;
 	private int count = 0;
 	private int count2 = 0;
-	private Vector2 collisionPoint;
 	private Fixture collided;
 	public Vector2 p1 = new Vector2();
 	public Vector2 p2 = new Vector2();
@@ -86,7 +85,7 @@ public class ServerComms{
 		client.getKryo().register(float[].class);
 
 		try{
-			client.connect(5000, "127.0.0.1", 54555, 54777);
+			client.connect(5000, configurableIP, configurablePORT1, configurablePORT2);
 		}catch(IOException e){
 			Dialogs.printDialog("SERVER FAILED TO START, CANNOT CONNECT! \n PLEASE CONFIRM IP EXAMPLE:127.0.0.1:55565");
 			logout();
@@ -165,7 +164,8 @@ public class ServerComms{
 	    			body.createFixture(fdef);
 	    			count = packet2.getCount();
 	    		}else if(object instanceof Packet8WorldInfo){
-	    			
+	    			packet8 = (Packet8WorldInfo)object;
+	    			packet8.GetWorld();
 	    		}else{
 	    			
 	    		}

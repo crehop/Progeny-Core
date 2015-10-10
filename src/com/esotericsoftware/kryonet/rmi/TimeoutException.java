@@ -5,6 +5,7 @@ package com.esotericsoftware.kryonet.rmi;
  * {@link RemoteObject#setResponseTimeout(int) response timeout}.
  * @see ObjectSpace#getRemoteObject(com.esotericsoftware.kryonet.Connection, int, Class...)
  * @author Nathan Sweet <misc@n4te.com> */
+@SuppressWarnings("serial")
 public class TimeoutException extends RuntimeException {
 	public TimeoutException () {
 		super();

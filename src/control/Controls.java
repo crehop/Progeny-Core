@@ -9,16 +9,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
 
 import entities.Creature;
-import entities.GameObject;
 import game.Location;
 
 public class Controls extends InputAdapter implements InputProcessor {
@@ -46,7 +38,6 @@ public class Controls extends InputAdapter implements InputProcessor {
 	@SuppressWarnings("unused")
 	private Location current;
 	private Progeny game;
-	private Material mat;
 	//Mouse sensitivity
 	private float mouseSensitivity = 0.04141519f;
 	private final float defaultMovementSpeed = 0.50f;
@@ -62,21 +53,12 @@ public class Controls extends InputAdapter implements InputProcessor {
 	float distance;
 	float dist2;
 	//3d OBJECT MANIPULATION
-	private int selected = -1, selecting = -1;
-	private Material selectionMaterial;
-	private Material originalMaterial;
-	private Vector3 position = new Vector3();
-	private Vector3 direction = new Vector3();
-	private Vector2 mousePosition = new Vector2();
 	Random rand = new Random();
 	//========================
 	public Controls(Progeny game){
 		this.game = game;
 		this.resX = Gdx.graphics.getWidth();
 		this.resY = Gdx.graphics.getHeight();
-	    selectionMaterial = new Material();
-		selectionMaterial.set(ColorAttribute.createDiffuse(Color.ORANGE));
-		originalMaterial = new Material();
 	}
 
 	public  void checkInput() {

@@ -13,10 +13,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+@SuppressWarnings({ "unused", "serial" })
 public class LoginGui extends JFrame{
 	private String username = "-1";
 	private String password = "-1";
 	boolean logout = false;
+	@SuppressWarnings("deprecation")
 	public LoginGui(){
 		JPanel panel = new JPanel(new BorderLayout(5, 5));
 	    JPanel label = new JPanel(new GridLayout(0, 1, 2, 2));

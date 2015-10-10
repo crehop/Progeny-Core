@@ -4,7 +4,6 @@ import progeny.Progeny;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.math.Vector3;
 
 import camera.CameraFPS;
 import entities.IDGetter;
@@ -33,10 +32,6 @@ public class Player extends CameraFPS implements Screen{
 		Progeny.getCam().up.set(0, 1, 0);
 		Progeny.getCam().position.set(this.location.getPosition());
 		Progeny.getCam().direction.set(0,0,-1);
-		this.updateLocation();
-		Progeny.getB2DCam().up.set(0, 1, 0);
-		Progeny.getB2DCam().position.set(this.location.getPosition());
-		Progeny.getB2DCam().direction.set(0,0,-1);
 		this.updateLocation();
 	}
 	@Override

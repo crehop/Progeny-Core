@@ -44,13 +44,15 @@ public class Progeny extends Game implements ApplicationListener {
 	public static int V_WIDTH;
 	public static final float SCALE = 2.0f;
 	public static final String VERSION = "0.01 Pre-Alpha";
+	@SuppressWarnings("unused")
 	private static int activeObjects = 0;
 	public static String LOG = "";
 	
 	private static SpriteBatch sb;
 	private static OrthographicCamera cam;
 	private static OrthographicCamera B2Dcam;
-    private static GameObject test;
+    @SuppressWarnings("unused")
+	private static GameObject test;
 	public static SplashScreen splash;
 	public static Player player;
 	public static UI ui;
@@ -91,6 +93,7 @@ public class Progeny extends Game implements ApplicationListener {
 		V_HEIGHT = 600;
 		V_WIDTH = 800;
 		
+		@SuppressWarnings("unused")
 		Thread thread = new Thread(){
 			Time time = new Time();
 		};

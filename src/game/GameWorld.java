@@ -1,7 +1,6 @@
 package game;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 import progeny.Progeny;
@@ -14,34 +13,25 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import entities.Chunk;
-import entities.Creature;
 
 public class GameWorld {
 	private long lastNanoTime = -1;
-	private long thisNanoTime = -1;
 	public static int PPM = 100;
 	ArrayList<Chunk> worldChunk; 
-	private int activeChunks;
-	private int activeObjects;
-	private boolean created = false;
 	private int sleepWaveCount = 0;
 	private int sleepWaveCountMax = 60;
-	private int wakeWaveCount = 10;
 	private int duration = 0;
 	private int cullCount = 10;
-	private int count;
 	private int random;
 	private int bodyHibernation;
 	Random rand = new Random();
 	Integer[][] worldChunks;
 	int width;
 	private float gravity = -9.8f;
-	private int yStrech = 650;
+	private int yStrech = 200;
 	private World world = new World(new Vector2(0,gravity), false);
 	private Array<Body> bodies = new Array<Body>();
 	private Box2DDebugRenderer renderer = new Box2DDebugRenderer();
-	private ArrayList<Body> bodySleep = new ArrayList<Body>();
-	private HashMap<Body,Vector2> bodyForce = new HashMap<Body,Vector2>();
 	//CREATURE 
 	public GameWorld(Integer[][] worldArray, int width) {
 		Progeny.world = this;
@@ -49,22 +39,7 @@ public class GameWorld {
 		worldChunk = new ArrayList<Chunk>();
 		worldChunks = worldArray;
 		WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 7142, 34500);
-		WorldUtils.GenerateChunks(worldArray, worldChunk, yStrech);
-		this.created = true;	 
-		//new Creature(getWorld(), new Location(2000,7000,0));
-		//new Creature(getWorld(), new Location(2000,7010,0));
-		//new Creature(getWorld(), new Location(2000,7020,0));
-		//new Creature(getWorld(), new Location(2000,7030,0));
-		//new Creature(getWorld(), new Location(2000,7040,0));
-		//new Creature(getWorld(), new Location(2000,7050,0));
-		//new Creature(getWorld(), new Location(2000,7060,0));
-		//new Creature(getWorld(), new Location(2000,7070,0));
-		//new Creature(getWorld(), new Location(2000,7080,0));
-		//new Creature(getWorld(), new Location(2000,7090,0));
-		//new Creature(getWorld(), new Location(2000,7100,0));
-		//new Creature(getWorld(), new Location(2000,7110,0));
-		//new Creature(getWorld(), new Location(2000,7120,0));
-		//new Creature(getWorld(), new Location(2000,7130,0));
+		WorldUtils.GenerateChunks();	 
 	}
 	public ArrayList<Chunk> getChunks(){
 		return worldChunk;
@@ -85,7 +60,6 @@ public class GameWorld {
 			this.lastNanoTime = System.nanoTime();
 		}
 		Console.setLine3("LAG DURATION:" + duration);
-		count = 1;
 		bodyHibernation = 0;;
 		sleepWaveCount++;
 		if(this.sleepWaveCount > this.sleepWaveCountMax){
