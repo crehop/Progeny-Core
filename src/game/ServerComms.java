@@ -14,7 +14,7 @@ import packets.Packet7WorldCreation;
 import packets.Packet8WorldInfo;
 import progeny.Progeny;
 import utils.ObjectUtils;
-import world.Console;
+import utils.Console;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -166,9 +166,8 @@ public class ServerComms{
 			new Packet8WorldInfo();
 		}
 		Packet3RequestBody ask = new Packet3RequestBody();
-		ask.setID(ObjectUtils.count);
+		ask.setID(ObjectUtils.getCount());
 		client.sendTCP(ask);
 		Console.setLine4("ID:" + ask.getID());
-		System.out.println(Console.getLine4());
 	}
 }
