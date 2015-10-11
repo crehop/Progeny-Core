@@ -3,7 +3,7 @@ package control;
 import java.util.Random;
 
 import progeny.Progeny;
-import screens.Console;
+import utils.Console;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -80,7 +80,6 @@ public class Controls extends InputAdapter implements InputProcessor {
 			}
 		}
 		if(back){
-			Console.setLine5("CONFIRM BACK");
 			if(Gdx.input.isCursorCatched()){
 				Progeny.player.walkBackward((float)(movementSpeed));
 			}

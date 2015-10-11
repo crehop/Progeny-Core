@@ -10,9 +10,10 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import screens.Console;
 import screens.Player;
 import screens.SplashScreen;
+import utils.Console;
+import utils.ObjectUtils;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
@@ -180,7 +181,7 @@ public class Progeny extends Game implements ApplicationListener {
 			//SHAPE RENDERER LOOP
 			sr.begin(ShapeType.Line);
 			sr.setProjectionMatrix(cam.combined);
-			sr.line(server.p1, server.p2);
+			sr.line(ObjectUtils.p1, ObjectUtils.p2);
 			sr.end();
 			//====================
 			//Effects and movement==================================
