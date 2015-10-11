@@ -69,6 +69,7 @@ public class ServerComms{
 		client.getKryo().register(Integer[][].class);
 		client.getKryo().register(Integer[].class);
 		client.getKryo().register(float[].class);
+		client.getKryo().register(Vector2.class);
 
 		try{
 			client.connect(5000, configurableIP, configurablePORT1, configurablePORT2);

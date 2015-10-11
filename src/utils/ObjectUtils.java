@@ -52,7 +52,23 @@ public class ObjectUtils {
 			fdef.friction = 1000;
 			System.out.println("BODY RECIEVED" + bdef.position.x + "/" + bdef.position.y + " ID:" +  packet.getID());
 			bdef.position.set(bdef.position.x - Gdx.graphics.getWidth()/2, bdef.position.y - Gdx.graphics.getHeight()/2);
-			Body body = Progeny.server.getWorld().getWorld().createBody(bdef);
+			Progeny.server.getWorld().getWorld().getBodies(bodies);
+			Body body;
+			if(packet.getID() > bodies.size - 1)body = Progeny.server.getWorld().getWorld().createBody(bdef);
+			else{
+				body = bodies.get(packet.getID());
+				body.setActive(packet2.getBodyDef().active);
+				body.setAngularDamping(packet2.getBodyDef().angularDamping);
+				body.setAwake(packet2.getBodyDef().awake);
+				body.setBullet(packet2.getBodyDef().bullet);
+				body.setFixedRotation(packet2.getBodyDef().fixedRotation);
+				body.setGravityScale(packet2.getBodyDef().gravityScale);
+				body.setLinearDamping(packet2.getBodyDef().linearDamping);
+				body.setLinearVelocity(packet2.getBodyDef().linearVelocity);
+				body.setSleepingAllowed(packet2.getBodyDef().allowSleep);
+				body.setTransform(packet2.location, packet2.getAngle());
+				body.setType(packet2.getBodyDef().type);
+			}
 			body.createFixture(fdef);
 			count++;
 		}
