@@ -28,7 +28,7 @@ public class GameWorld {
 	Random rand = new Random();
 	Integer[][] worldChunks;
 	int width;
-	private float gravity = -9.8f;
+	private float gravity = -0.0f;
 	private int yStrech = 200;
 	private World world = new World(new Vector2(0,gravity), false);
 	private Array<Body> bodies = new Array<Body>();
@@ -39,8 +39,8 @@ public class GameWorld {
 		this.width = width;
 		worldChunk = new ArrayList<Chunk>();
 		worldChunks = worldArray;
-		WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 7142, 34500);
-		WorldUtils.GenerateChunks();	 
+		//WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 7142, 34500);
+		//WorldUtils.GenerateChunks();	 
 	}
 	public ArrayList<Chunk> getChunks(){
 		return worldChunk;
@@ -56,10 +56,11 @@ public class GameWorld {
 		if(this.lastNanoTime == -1){
 			this.lastNanoTime = System.nanoTime();
 		}
-		if(((System.nanoTime()/1000000000) - (this.lastNanoTime/1000000000)) > 2){
-			Progeny.server.updateBodies();
-			this.lastNanoTime = System.nanoTime();
+		if(((System.nanoTime()/10000000) - (this.lastNanoTime/10000000)) > 0.0001f){
+
 		}
+		Progeny.server.updateBodies();
+		this.lastNanoTime = System.nanoTime();
 		Console.setLine3("LAG DURATION:" + duration);
 		bodyHibernation = 0;;
 		sleepWaveCount++;

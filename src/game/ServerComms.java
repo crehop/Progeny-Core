@@ -5,6 +5,7 @@ import interfaces.Dialogs;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import packets.Packet;
 import packets.Packet1Connect;
@@ -18,6 +19,7 @@ import utils.Console;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
@@ -25,6 +27,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -51,6 +54,7 @@ public class ServerComms{
 		client = new Client();
 		client.start();
 		client.getKryo().register(Packet.class);
+		client.getKryo().register(Shape.class);
 		client.getKryo().register(CircleShape.class);
 		client.getKryo().register(PolygonShape.class);
 		client.getKryo().register(Array.class);
@@ -167,8 +171,7 @@ public class ServerComms{
 			new Packet8WorldInfo();
 		}
 		Packet3RequestBody ask = new Packet3RequestBody();
-		ask.setID(ObjectUtils.getCount());
+		ask.setID(0);
 		client.sendTCP(ask);
-		Console.setLine4("ID:" + ask.getID());
 	}
 }
