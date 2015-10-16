@@ -21,7 +21,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -56,6 +58,8 @@ public class ServerComms{
 		client.getKryo().register(Packet.class);
 		client.getKryo().register(Shape.class);
 		client.getKryo().register(CircleShape.class);
+		client.getKryo().register(ChainShape.class);
+		client.getKryo().register(EdgeShape.class);
 		client.getKryo().register(PolygonShape.class);
 		client.getKryo().register(Array.class);
 		client.getKryo().register(Object[].class);
