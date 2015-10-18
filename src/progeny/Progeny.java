@@ -27,14 +27,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import control.Controls;
 import control.MenuControls;
 import entities.AssetHandler;
+import entities.Ball;
 import entities.GameObject;
+import entities.RenderBody;
 
 public class Progeny extends Game implements ApplicationListener {
 	public static final String TITLE = "Progeny";
@@ -132,7 +133,6 @@ public class Progeny extends Game implements ApplicationListener {
 		if(assets.getAssetManager().update() && this.screen.equals(splash)) {
 			ui.render(Gdx.graphics.getDeltaTime());
 		}
-		
 		//GAME LOOP=================================================================================================================
 		else if(assets.getAssetManager().update() && this.screen.equals(player)) {
 			controls.checkInput();
@@ -162,19 +162,20 @@ public class Progeny extends Game implements ApplicationListener {
 	        Console.render();
 			//===================
 			//SHAPE RENDERER LOOP
-	        if(ObjectUtils.radius > 0){
-	        	sr.begin(ShapeType.Filled);
-	        	sr.setProjectionMatrix(cam.combined);
-	        	sr.circle(ObjectUtils.p1.x, ObjectUtils.p1.y, ObjectUtils.radius);
-	        	sr.end();
-	        }else{
-				sr.begin(ShapeType.Line);
-				sr.setProjectionMatrix(cam.combined);
-				sr.line(ObjectUtils.p1, ObjectUtils.p2);
-				sr.end();
+	        for(int i = 1; i<ObjectUtils.renderBodies.size(); i++){
+	        	RenderBody body = ObjectUtils.renderBodies.get(i-1);
+	        	if(body!= null){
+		        	if(body instanceof Ball){
+		        		((Ball)body).render(sr,cam);
+		        	}else{
+						//sr.begin(ShapeType.Line);
+						//sr.setProjectionMatrix(cam.combined);
+						//sr.line(ObjectUtils.p1, ObjectUtils.p2);
+						//sr.end();
+			        }
+	        	}
 	        }
-
-			//====================
+	        ObjectUtils.renderBodies.clear();
 			//Effects and movement==================================
 
 			sb.begin();
@@ -188,7 +189,7 @@ public class Progeny extends Game implements ApplicationListener {
 
 			
 		//LOADING LOOP =========================================================================================================
-	      }else{
+	     }else{
 	       progress = assets.getAssetManager().getProgress();
 	  	 }
 	}

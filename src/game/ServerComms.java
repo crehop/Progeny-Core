@@ -104,7 +104,7 @@ public class ServerComms{
 		System.out.println("Initializing Listener...." );
 	    client.addListener(new Listener() {
 	    public void received (Connection connection, Object object) {
-    		System.out.println("" + object.toString());
+    		//System.out.println("" + object.toString());
 	    	totalPackets++;
 	    	if(object instanceof Packet){
 	    		if(object instanceof Packet1Connect){
@@ -122,7 +122,7 @@ public class ServerComms{
 	    			Packet3RequestBody ask = new Packet3RequestBody();
 	    			client.sendTCP(ask);
 	    		}else if(object instanceof Packet2Body){
-	    			ObjectUtils.copy((Packet2Body)object);
+	    			ObjectUtils.process((Packet2Body)object);
 	    			Packet3RequestBody ask = new Packet3RequestBody();
 	    			client.sendTCP(ask);
 	    		}else if(object instanceof Packet8WorldInfo){

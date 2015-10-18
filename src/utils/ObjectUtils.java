@@ -1,6 +1,9 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import packets.Packet2Body;
 import utils.Console;
@@ -11,12 +14,17 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 
+import entities.Ball;
+import entities.RenderBody;
+import game.Location;
+
 public class ObjectUtils {
 	private static Packet2Body packet2;
 	public static Vector2 p1 = new Vector2();
 	public static Vector2 p2 = new Vector2();
 	public static float radius;
-	private static HashMap<Integer,Body> bodiesMap = new HashMap<Integer,Body>();
+	private static HashMap<Integer,Ball> ballMap = new HashMap<Integer,Ball>();
+	public static ArrayList<RenderBody> renderBodies = new ArrayList<RenderBody>();
 	static RayCastCallback callback = new RayCastCallback(){
 		@Override
 		public float reportRayFixture(Fixture col, Vector2 v1, Vector2 v2,
@@ -26,7 +34,6 @@ public class ObjectUtils {
 		}
 	};
 	public static void copy(Packet2Body packet){
-		Console.setLine5("GETCOUNT!:" + packet.getID());
 		if(packet.getID() == -1){
 			return;
 		}
@@ -44,5 +51,26 @@ public class ObjectUtils {
 	}
 	public static float roundDown3(float d) {
 	    return (float) ((float)(d * 1e3) / 1e3);
+	}
+	public static void process(Packet2Body packet) {
+		if(packet.getID() == -1){
+			return;
+		}
+		Console.setLine5("GETCOUNT!:" + packet.getID());
+		if(packet.getRaidus() > 0){
+			if(ballMap.containsKey(packet.getID())){
+				if(ballMap.get(packet.getID()).getRadius() != packet.getRaidus()){
+					ballMap.get(packet.getID()).setRadius(packet.getRaidus());
+				}
+				if(!renderBodies.contains(ballMap.get(packet.getID()))){
+					renderBodies.listIterator().add(ballMap.get(packet.getID()));
+				}
+			}else{
+				ballMap.put(packet.getID(), new Ball(new Location(packet.location.x, packet.location.y, 0), packet.getRaidus()));
+				renderBodies.listIterator().add(ballMap.get(packet.getID()));
+			}
+		}else{
+			
+		}
 	}
 }

@@ -2,7 +2,6 @@ package packets;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class Packet2Body extends Packet{
 	private BodyDef def;
@@ -12,6 +11,9 @@ public class Packet2Body extends Packet{
 	private float angle;
 	public int getID(){
 		return count;
+	}
+	
+	public Packet2Body(){
 	}
 	public BodyDef getBodyDef(){
 		return def;
