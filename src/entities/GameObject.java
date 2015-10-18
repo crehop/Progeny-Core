@@ -20,7 +20,7 @@ public class GameObject extends Sprite{
 	String meta = "null";
     public final Vector3 center = new Vector3();
     public final Vector3 dimensions = new Vector3();
-    public final float radius;
+    public float radius;
     private int ID = 0;
 	private TextureRegion textureRegion;
 	private boolean yVisible = false;

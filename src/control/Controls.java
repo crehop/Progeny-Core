@@ -10,7 +10,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 
-import entities.Creature;
+import entities.Asteroid;
 import game.Location;
 
 public class Controls extends InputAdapter implements InputProcessor {

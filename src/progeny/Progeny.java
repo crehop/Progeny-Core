@@ -1,6 +1,5 @@
 package progeny;
 
-import game.ChunkType;
 import game.Effects;
 import game.Time;
 import interfaces.UI;
@@ -35,7 +34,6 @@ import com.badlogic.gdx.utils.Array;
 import control.Controls;
 import control.MenuControls;
 import entities.AssetHandler;
-import entities.Chunk;
 import entities.GameObject;
 
 public class Progeny extends Game implements ApplicationListener {
@@ -164,10 +162,18 @@ public class Progeny extends Game implements ApplicationListener {
 	        Console.render();
 			//===================
 			//SHAPE RENDERER LOOP
-			sr.begin(ShapeType.Line);
-			sr.setProjectionMatrix(cam.combined);
-			sr.line(ObjectUtils.p1, ObjectUtils.p2);
-			sr.end();
+	        if(ObjectUtils.radius > 0){
+	        	sr.begin(ShapeType.Filled);
+	        	sr.setProjectionMatrix(cam.combined);
+	        	sr.circle(ObjectUtils.p1.x, ObjectUtils.p1.y, ObjectUtils.radius);
+	        	sr.end();
+	        }else{
+				sr.begin(ShapeType.Line);
+				sr.setProjectionMatrix(cam.combined);
+				sr.line(ObjectUtils.p1, ObjectUtils.p2);
+				sr.end();
+	        }
+
 			//====================
 			//Effects and movement==================================
 
