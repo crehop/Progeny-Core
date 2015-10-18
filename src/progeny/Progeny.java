@@ -2,7 +2,6 @@ package progeny;
 
 import game.ChunkType;
 import game.Effects;
-import game.GameWorld;
 import game.Time;
 import interfaces.UI;
 
@@ -68,7 +67,6 @@ public class Progeny extends Game implements ApplicationListener {
 	
 	public static Controls controls;
 	public static MenuControls controlsMenu;
-	public static GameWorld world;
 	
 	public static ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
@@ -150,26 +148,13 @@ public class Progeny extends Game implements ApplicationListener {
 	  	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
 	  	    //=========================================
+			server.updateBodies();
 			//Chunks=====================================
 			sb.begin();
 			activeObjects = 0;
-			for(Chunk chunk:server.getWorld().getChunks()){
-				if(chunk.getChunk().isVisible((int)player.getLocation().getX(), (int)player.getLocation().getY())){
-					sb.draw(
-							ChunkType.getTexture(chunk.getType()),
-							chunk.getChunk().getLocation().getX() - 
-							player.getLocation().getX(), 
-							chunk.getChunk().getLocation().getY() - 
-							player.getLocation().getY(),(float)(server.getWorld().getWidth()),server.getWorld().getYStrech());
-					activeObjects++;
-				}
-			}
-			Console.setLine6("GAME OBJECTS = " + world.getWorld().getBodyCount());
-			Console.setLine7("ACTIVE OBJECTS = " + world.getWorld().getContactCount());
 	        sb.end();
 	        //WORLD RENDER
 	        if(server.loggedIn()){
-	        	server.getWorld().update((float)(1.0f/Gdx.graphics.getFramesPerSecond()));
 	        }
 	        
 	        //CHUNK GRID=================================
@@ -194,7 +179,6 @@ public class Progeny extends Game implements ApplicationListener {
 			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 	  	    //=========================================
-			
 
 			
 		//LOADING LOOP =========================================================================================================

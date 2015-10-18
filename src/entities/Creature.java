@@ -13,38 +13,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Creature {
-	PolygonShape shape = new PolygonShape();
-	CircleShape shape2 = new CircleShape();
 	Body body;
 	BodyDef def;
 	Location location;
-	FixtureDef fdef;
-	Random rand = new Random();
 
 	public Creature(World world, Location position){
 		this.location = position;
-		def = new BodyDef();
-		def.position.set(location.getX(), location.getY());
-		def.type = BodyType.DynamicBody;
-		def.angle = 200;
-		float[] creature = new float[8];
-		creature[0] = 1f;
-		creature[1] = 0;
-		creature[2] = 43;
-		creature[3] = 88;
-		creature[4] = 80;
-		creature[5] = 26;
-		creature[6] = 86;
-		creature[7] = 0;
-		shape.set(creature);
-		shape2.setRadius(rand.nextInt(30));
-		
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape2;
-		fdef.density = 200;
-		fdef.friction = 1000;
-		body = world.createBody(def);
-		body.createFixture(fdef);
 	}
 }
 

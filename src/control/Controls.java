@@ -68,11 +68,6 @@ public class Controls extends InputAdapter implements InputProcessor {
 		if(menu){
 		}
 		if(testDown){
-			Console.setLine8("PHYSICS ENTITIES ACTIVE / GRAVITY: " + Progeny.world.getWorld().getBodyCount() +  "/" + Progeny.world.getWorld().getGravity());
-			new Creature(Progeny
-					.world
-					.getWorld(), 
-					new Location(2000 + rand.nextInt(400),7180 + rand.nextFloat() * 10000,0));
 		}
 		if(forward){
 			if(Gdx.input.isCursorCatched()){
@@ -221,12 +216,6 @@ public class Controls extends InputAdapter implements InputProcessor {
 			case Input.Keys.ENTER:
 				return false;
 			case Input.Keys.E:
-				for(int i = 0; i<2000; i++){
-					new Creature(Progeny
-							.world
-							.getWorld(), 
-							new Location(2000 + rand.nextInt(400),7180 + rand.nextFloat() * 10000,0));
-				}
 				this.testDown = false;
 				return false;
 			case Input.Keys.W:
