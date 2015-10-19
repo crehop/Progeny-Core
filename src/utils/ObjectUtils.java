@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 
 import entities.Ball;
+import entities.Poly;
 import entities.RenderBody;
 import game.Location;
 
@@ -23,7 +24,7 @@ public class ObjectUtils {
 	public static Vector2 p1 = new Vector2();
 	public static Vector2 p2 = new Vector2();
 	public static float radius;
-	private static HashMap<Integer,Ball> ballMap = new HashMap<Integer,Ball>();
+	public static HashMap<Integer,RenderBody> objectMap = new HashMap<Integer,RenderBody>();
 	public static ArrayList<RenderBody> renderBodies = new ArrayList<RenderBody>();
 	static RayCastCallback callback = new RayCastCallback(){
 		@Override
@@ -55,22 +56,31 @@ public class ObjectUtils {
 	public static void process(Packet2Body packet) {
 		if(packet.getID() == -1){
 			return;
-		}
-		Console.setLine5("GETCOUNT!:" + packet.getID());
-		if(packet.getRaidus() > 0){
-			if(ballMap.containsKey(packet.getID())){
-				if(ballMap.get(packet.getID()).getRadius() != packet.getRaidus()){
-					ballMap.get(packet.getID()).setRadius(packet.getRaidus());
+		}else if(objectMap.containsKey(packet.getID())){
+			Console.setLine5("GETCOUNT!:" + packet.getID());
+			Console.setLine2("POLY?:" + packet.isPolygon());
+			if(!packet.isPolygon()){
+				Ball ball = (Ball)objectMap.get(packet.getID());
+				ball.setLocation(new Location(packet.location.x,packet.location.y,0));
+				ball.setRadius(packet.getRaidus());
+				if(!renderBodies.contains(objectMap.get(packet.getID()))){
+					renderBodies.listIterator().add(ball);
 				}
-				if(!renderBodies.contains(ballMap.get(packet.getID()))){
-					renderBodies.listIterator().add(ballMap.get(packet.getID()));
+			}else if(packet.isPolygon()){
+				Poly poly = (Poly)objectMap.get(packet.getID());
+				poly.setLocation(new Location(packet.location.x,packet.location.y,0));
+				if(!renderBodies.contains(objectMap.get(packet.getID()))){
+					renderBodies.listIterator().add(poly);
 				}
-			}else{
-				ballMap.put(packet.getID(), new Ball(new Location(packet.location.x, packet.location.y, 0), packet.getRaidus()));
-				renderBodies.listIterator().add(ballMap.get(packet.getID()));
 			}
 		}else{
-			
+			if(!packet.isPolygon()){
+				objectMap.put(packet.getID(), new Ball(new Location(packet.location.x, packet.location.y, 0), packet.getRaidus()));
+				renderBodies.listIterator().add(objectMap.get(packet.getID()));
+			}else{
+				objectMap.put(packet.getID(), new Poly(packet.getVertices(),new Location(packet.location.x, packet.location.y, 0)));
+				renderBodies.listIterator().add(objectMap.get(packet.getID()));
+			}
 		}
 	}
 }

@@ -35,6 +35,7 @@ import control.MenuControls;
 import entities.AssetHandler;
 import entities.Ball;
 import entities.GameObject;
+import entities.Poly;
 import entities.RenderBody;
 
 public class Progeny extends Game implements ApplicationListener {
@@ -162,21 +163,21 @@ public class Progeny extends Game implements ApplicationListener {
 	        Console.render();
 			//===================
 			//SHAPE RENDERER LOOP
-	        for(int i = 1; i<ObjectUtils.renderBodies.size(); i++){
-	        	RenderBody body = ObjectUtils.renderBodies.get(i-1);
+	        for(RenderBody body:ObjectUtils.renderBodies){
 	        	if(body!= null){
 		        	if(body instanceof Ball){
 		        		((Ball)body).render(sr,cam);
+		        	}
+		        	else if(body instanceof Poly){
+		        		((Poly)body).render(sr,cam);
 		        	}else{
-						//sr.begin(ShapeType.Line);
-						//sr.setProjectionMatrix(cam.combined);
-						//sr.line(ObjectUtils.p1, ObjectUtils.p2);
-						//sr.end();
+		        		System.out.println("UNKNOWN");
 			        }
 	        	}
 	        }
 	        ObjectUtils.renderBodies.clear();
-			//Effects and movement==================================
+	        
+	        //Effects and movement==================================
 
 			sb.begin();
 			Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
@@ -186,6 +187,7 @@ public class Progeny extends Game implements ApplicationListener {
 			Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 	  	    //=========================================
+
 
 			
 		//LOADING LOOP =========================================================================================================

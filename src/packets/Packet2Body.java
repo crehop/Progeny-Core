@@ -9,6 +9,8 @@ public class Packet2Body extends Packet{
 	private int count;
 	public Vector2 location;
 	private float angle;
+	private Vector2[] vertices;
+	private boolean polygon;
 	public int getID(){
 		return count;
 	}
@@ -32,9 +34,28 @@ public class Packet2Body extends Packet{
 		return this.angle;
 	}
 	public void setRadius(float radius) {
-		this.radius = radius;		
+		this.radius = radius;
+		setPolygon(false);
 	}
 	public float getRaidus(){
 		return this.radius;
+	}
+	public Vector2[] getVertices(){
+		return this.vertices;
+	}
+
+	public void packVertices(Vector2[] vertices) {
+		this.vertices = vertices;
+		if(this.vertices != null){
+			this.setPolygon(true);
+		}
+	}
+
+	public boolean isPolygon() {
+		return polygon;
+	}
+
+	public void setPolygon(boolean polygon) {
+		this.polygon = polygon;
 	}
 }

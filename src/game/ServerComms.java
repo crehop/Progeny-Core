@@ -49,6 +49,7 @@ public class ServerComms{
 	public ServerComms() throws UnknownHostException, IOException{
 		client = new Client();
 		client.start();
+		client.getKryo().register(Vector2[].class);
 		client.getKryo().register(World.class);
 		client.getKryo().register(Packet.class);
 		client.getKryo().register(Array.class);
@@ -80,14 +81,14 @@ public class ServerComms{
 		packet1.setUsername("crehop");//login.getUsername());
 		packet1.setPassword("password");//login.getPassword());
 		System.out.println("Sending Login request.....");
-		client.sendTCP(packet1);
+		client.sendUDP(packet1);
 		this.initializeListener();
 		if(logout){
 			Gdx.app.exit();
 		}else{
 			packet7 = new Packet7WorldCreation();
 			System.out.println("Asking for World.....");
-			client.sendTCP(packet7);
+			client.sendUDP(packet7);
 			this.initialize();
 		}
 	}
@@ -120,11 +121,11 @@ public class ServerComms{
 	    			packet7 = (Packet7WorldCreation)object;
 	    			System.out.println("World Recieved, Creating.....");
 	    			Packet3RequestBody ask = new Packet3RequestBody();
-	    			client.sendTCP(ask);
+	    			client.sendUDP(ask);
 	    		}else if(object instanceof Packet2Body){
 	    			ObjectUtils.process((Packet2Body)object);
 	    			Packet3RequestBody ask = new Packet3RequestBody();
-	    			client.sendTCP(ask);
+	    			client.sendUDP(ask);
 	    		}else if(object instanceof Packet8WorldInfo){
 	    			packet8 = (Packet8WorldInfo)object;
 	    			packet8.GetWorld();
@@ -147,6 +148,6 @@ public class ServerComms{
 		}
 		Packet3RequestBody ask = new Packet3RequestBody();
 		ask.setID(0);
-		client.sendTCP(ask);
+		client.sendUDP(ask);
 	}
 }
