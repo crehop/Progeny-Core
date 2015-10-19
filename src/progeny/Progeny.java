@@ -7,6 +7,7 @@ import interfaces.UI;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import screens.Player;
 import screens.SplashScreen;
@@ -163,20 +164,7 @@ public class Progeny extends Game implements ApplicationListener {
 	        Console.render();
 			//===================
 			//SHAPE RENDERER LOOP
-	        for(RenderBody body:ObjectUtils.renderBodies){
-	        	if(body!= null){
-		        	if(body instanceof Ball){
-		        		((Ball)body).render(sr,cam);
-		        	}
-		        	else if(body instanceof Poly){
-		        		((Poly)body).render(sr,cam);
-		        	}else{
-		        		System.out.println("UNKNOWN");
-			        }
-	        	}
-	        }
-	        ObjectUtils.renderBodies.clear();
-	        
+	        renderBodies();
 	        //Effects and movement==================================
 
 			sb.begin();
@@ -253,5 +241,37 @@ public class Progeny extends Game implements ApplicationListener {
 
 	public static void setB2DCam(OrthographicCamera cam) {
 		Progeny.B2Dcam = cam;
+	}
+	public synchronized void renderBodies(){
+		try{
+			for(RenderBody body:ObjectUtils.getBodies()){
+		    	if(body!= null){
+		        	if(body instanceof Ball){
+		        		((Ball)body).render(sr,cam);
+		        	}
+		        	else if(body instanceof Poly){
+		        		((Poly)body).render(sr,cam);
+		        	}else{
+		        		System.out.println("UNKNOWN");
+			        }
+		    	}
+		    }
+		    ObjectUtils.clearBodies();
+			for(RenderBody body:ObjectUtils.getAllBodies()){
+		    	if(body!= null){
+		        	if(body instanceof Ball){
+		        		((Ball)body).render(sr,cam);
+		        	}
+		        	else if(body instanceof Poly){
+		        		((Poly)body).render(sr,cam);
+		        	}else{
+		        		System.out.println("UNKNOWN");
+			        }
+		    	}
+		    }
+		}catch(ConcurrentModificationException e){
+			
+		}
+		
 	}
 }

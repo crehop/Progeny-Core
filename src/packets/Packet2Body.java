@@ -6,13 +6,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 public class Packet2Body extends Packet{
 	private BodyDef def;
 	private float radius;
-	private int count;
+	private int UID;
 	public Vector2 location;
 	private float angle;
 	private Vector2[] vertices;
 	private boolean polygon;
-	public int getID(){
-		return count;
+	public int getUID(){
+		return UID;
 	}
 	
 	public Packet2Body(){
@@ -23,8 +23,8 @@ public class Packet2Body extends Packet{
 	public void setBodyDef(BodyDef def){
 		this.def = def;
 	}
-	public void setCount(int count){
-		this.count = count;
+	public void setUID(int UID){
+		this.UID = UID;
 	}
 	public void setLocation(float x,float y, float angle){
 		this.location = new Vector2(x,y);

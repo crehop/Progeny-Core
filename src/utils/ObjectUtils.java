@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.Map.Entry;
 
 import packets.Packet2Body;
 import utils.Console;
@@ -25,7 +26,9 @@ public class ObjectUtils {
 	public static Vector2 p2 = new Vector2();
 	public static float radius;
 	public static HashMap<Integer,RenderBody> objectMap = new HashMap<Integer,RenderBody>();
-	public static ArrayList<RenderBody> renderBodies = new ArrayList<RenderBody>();
+	private static ArrayList<RenderBody> renderBodies = new ArrayList<RenderBody>();
+	private static ArrayList<RenderBody> renders = new ArrayList<RenderBody>();
+
 	static RayCastCallback callback = new RayCastCallback(){
 		@Override
 		public float reportRayFixture(Fixture col, Vector2 v1, Vector2 v2,
@@ -35,7 +38,7 @@ public class ObjectUtils {
 		}
 	};
 	public static void copy(Packet2Body packet){
-		if(packet.getID() == -1){
+		if(packet.getUID() == -1){
 			return;
 		}
 		packet2 = packet;
@@ -53,34 +56,50 @@ public class ObjectUtils {
 	public static float roundDown3(float d) {
 	    return (float) ((float)(d * 1e3) / 1e3);
 	}
-	public static void process(Packet2Body packet) {
-		if(packet.getID() == -1){
+	public synchronized static void process(Packet2Body packet) {
+		if(packet.getUID() == -1){
 			return;
-		}else if(objectMap.containsKey(packet.getID())){
-			Console.setLine5("GETCOUNT!:" + packet.getID());
+		}else if(objectMap.containsKey(packet.getUID())){
+			Console.setLine5("GETCOUNT!:" + packet.getUID());
 			Console.setLine2("POLY?:" + packet.isPolygon());
 			if(!packet.isPolygon()){
-				Ball ball = (Ball)objectMap.get(packet.getID());
+				Ball ball = (Ball)objectMap.get(packet.getUID());
 				ball.setLocation(new Location(packet.location.x,packet.location.y,0));
 				ball.setRadius(packet.getRaidus());
-				if(!renderBodies.contains(objectMap.get(packet.getID()))){
+				if(!renderBodies.contains(objectMap.get(packet.getUID()))){
 					renderBodies.listIterator().add(ball);
 				}
 			}else if(packet.isPolygon()){
-				Poly poly = (Poly)objectMap.get(packet.getID());
+				Poly poly = (Poly)objectMap.get(packet.getUID());
 				poly.setLocation(new Location(packet.location.x,packet.location.y,0));
-				if(!renderBodies.contains(objectMap.get(packet.getID()))){
+				if(!renderBodies.contains(objectMap.get(packet.getUID()))){
 					renderBodies.listIterator().add(poly);
 				}
 			}
 		}else{
 			if(!packet.isPolygon()){
-				objectMap.put(packet.getID(), new Ball(new Location(packet.location.x, packet.location.y, 0), packet.getRaidus()));
-				renderBodies.listIterator().add(objectMap.get(packet.getID()));
+				objectMap.put(packet.getUID(), new Ball(new Location(packet.location.x, packet.location.y, 0), packet.getRaidus()));
+				renderBodies.listIterator().add(objectMap.get(packet.getUID()));
 			}else{
-				objectMap.put(packet.getID(), new Poly(packet.getVertices(),new Location(packet.location.x, packet.location.y, 0)));
-				renderBodies.listIterator().add(objectMap.get(packet.getID()));
+				objectMap.put(packet.getUID(), new Poly(packet.getVertices(),new Location(packet.location.x, packet.location.y, 0)));
+				renderBodies.listIterator().add(objectMap.get(packet.getUID()));
 			}
 		}
+	}
+	public synchronized static ArrayList<RenderBody> getBodies(){
+		return renderBodies;
+	}
+	public synchronized static void setBody(RenderBody body, int UID){
+		
+	}
+	public synchronized static void clearBodies() {
+		renderBodies.clear();
+	}
+	public static ArrayList<RenderBody> getAllBodies() {
+		if(renders.size()> 0)renders.clear();
+		for(Integer entry : objectMap.keySet()) {
+			renders.add(objectMap.get(entry));
+		}
+		return renders;
 	}
 }
