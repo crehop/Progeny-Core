@@ -12,7 +12,6 @@ public class Ball extends RenderBody{
 	private Location location;
 	private float radius;
 	private int ID;
-	private ShapeDescription shape =  ShapeDescription.CIRCLE;
 	public Ball(Location location, float radius){
 		this.radius = radius;
 		this.location = location;

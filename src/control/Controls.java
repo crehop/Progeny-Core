@@ -3,14 +3,12 @@ package control;
 import java.util.Random;
 
 import progeny.Progeny;
-import utils.Console;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 
-import entities.Asteroid;
 import game.Location;
 
 public class Controls extends InputAdapter implements InputProcessor {

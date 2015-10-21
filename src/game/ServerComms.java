@@ -13,19 +13,11 @@ import packets.Packet7WorldCreation;
 import packets.Packet8WorldInfo;
 import progeny.Progeny;
 import utils.ObjectUtils;
-import utils.Console;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryonet.Client;
@@ -43,7 +35,9 @@ public class ServerComms{
 	private boolean logout = false;
 	private boolean loginConfirm = false;
 	private boolean worldTransfer = false;
+	@SuppressWarnings("unused")
 	private int totalPackets = 0;
+	@SuppressWarnings("unused")
 	private World world = new World(new Vector2(0, 0), false);
 	
 	public ServerComms() throws UnknownHostException, IOException{
