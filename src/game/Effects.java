@@ -17,25 +17,4 @@ public class Effects {
 	    lineRenderer.color(r, g, b, a);
 	    lineRenderer.vertex(x2, y2, z2);
 	}
-	public static void grid(int width, int height, Color color, int numberOfLines) {
-		spacingH = height/numberOfLines;
-		spacingW = width/numberOfLines;
-	    for(int x = -1000; x <= width; x += spacingH) {
-	    	line(x, height, 1,
-	    		x, -1000, 1,
-	    		color.r, color.g, color.b, color.a);
-	    }
-	    for(int y = -1000; y <= height; y += spacingW){
-	    	line(-1000, y, 0,
-	    		width, y, 0,
-	    		color.r, color.g, color.b, color.a);
-	    }
-	}
-	
-	public static void drawGrid(Camera cam){
-		cam.update();
-		lineRenderer.begin(cam.combined, GL20.GL_LINES);
-		grid(32500,32500,Color.BLACK,325);
-		lineRenderer.end();
-	}
 }

@@ -157,9 +157,6 @@ public class Progeny extends Game implements ApplicationListener {
 	        if(server.loggedIn()){
 	        }
 	        
-	        //CHUNK GRID=================================
-	        Effects.drawGrid(cam);
-			//=========================================
 			//CONSOLE RENDER
 	        Console.render();
 			//===================
